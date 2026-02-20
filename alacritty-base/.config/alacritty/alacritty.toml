@@ -1,3 +1,8 @@
+[general]
+import = [
+    "~/.config/alacritty/font.toml"
+]
+
 [window]
 decorations = "None"
 opacity = 0.95
@@ -8,22 +13,6 @@ y = 8
 
 [font]
 size = 14
-
-[font.normal]
-family = "MesloLGS NF"
-style = "Regular"
-
-[font.bold]
-family = "MesloLGS NF"
-style = "Bold"
-
-[font.italic]
-family = "MesloLGS NF"
-style = "Italic"
-
-[font.bold_italic]
-family = "MesloLGS NF"
-style = "Bold Italic"
 
 [colors]
 
