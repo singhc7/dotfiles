@@ -1,0 +1,65 @@
+[window]
+decorations = "None"
+opacity = 0.95
+
+[window.padding]
+x = 8
+y = 8
+
+[font]
+size = 14
+
+[font.normal]
+family = "MesloLGS NF"
+style = "Regular"
+
+[font.bold]
+family = "MesloLGS NF"
+style = "Bold"
+
+[font.italic]
+family = "MesloLGS NF"
+style = "Italic"
+
+[font.bold_italic]
+family = "MesloLGS NF"
+style = "Bold Italic"
+
+[colors]
+
+[colors.primary]
+background = "#000000"  # True Pitch Black
+foreground = "#e0f7fa"  # Icy White (slight blue tint)
+
+[colors.cursor]
+text = "#000000"
+cursor = "#00e5ff"      # Glowing Cyan Cursor
+
+[colors.selection]
+text = "#000000"
+background = "#00e5ff"  # High visibility selection
+
+[colors.normal]
+black   = "#121212"
+red     = "#ff1744"     # sharp red for errors
+green   = "#00e676"     # bright mint green
+yellow  = "#ffea00"     # electric yellow
+blue    = "#2979ff"     # Deep Electric Blue
+magenta = "#d500f9"     # Neon Purple (kept for contrast)
+cyan    = "#00e5ff"     # The main star: Electric Cyan
+white   = "#e0f7fa"
+
+[colors.bright]
+black   = "#404040"
+red     = "#ff5252"
+green   = "#69f0ae"
+yellow  = "#ffff00"
+blue    = "#448aff"     # Brighter Blue
+magenta = "#e040fb"
+cyan    = "#18ffff"     # Max Brightness Cyan
+white   = "#ffffff"
+
+[cursor]
+style = { shape = "Beam", blinking = "Always" }
+vi_mode_style = { shape = "Block", blinking = "Off" } # Becomes a block when you use Vim!
+
