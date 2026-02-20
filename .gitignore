@@ -1,0 +1,30 @@
+# =========================
+# Security & Secrets (CRITICAL)
+# =========================
+rclone.conf
+*.kdbx
+*.kdb
+cert.pem
+key.pem
+id_rsa*
+id_ed25519*
+gh/hosts.yml
+.ssh/
+.gnupg/
+
+# =========================
+# OS / Environment Junk
+# =========================
+# macOS creates these hidden indexing files automatically
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# =========================
+# Caches & temporary files
+# =========================
+*.log
+*.swp
+*~
+.viminfo
