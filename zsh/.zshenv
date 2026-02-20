@@ -1,1 +1,6 @@
-. "$HOME/.cargo/env"
+# Load Rust (if installed)
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
+
+

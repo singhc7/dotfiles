@@ -20,7 +20,11 @@ antidote load
 
 # 4. Load Powerlevel10k Visual Settings
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-. "/home/chahat/.deno/env"
+
+# 5. Load Deno (if installed)
+if [ -f "$HOME/.deno/env" ]; then
+    . "$HOME/.deno/env"
+fi
 
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -79,5 +83,4 @@ alias update-all='sudo dnf upgrade && flatpak update && snap refresh && pipx upg
 
 # 2. To clean and remove old dependencies
 alias clean-system='sudo dnf autoremove && flatpak uninstall --unused && pipx interpreter prune'
-
 fi
