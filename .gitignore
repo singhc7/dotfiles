@@ -28,3 +28,4 @@ gh/hosts.yml
 *.swp
 *~
 .viminfo
+.zsh_plugins.zsh
