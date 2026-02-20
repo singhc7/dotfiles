@@ -15,6 +15,7 @@ antidote load
 
 export PATH="$HOME/.local/bin:$PATH"
 
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 # --- NNN CONFIGURATION ---
 
 # 1. Plugins
