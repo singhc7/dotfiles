@@ -3,6 +3,15 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# ==========================================
+# Antidote Bootstrap & Load
+# ==========================================
+# If Antidote isn't installed, clone it automatically
+if [[ ! -d ~/.antidote ]]; then
+    echo "Installing Antidote..."
+    git clone --depth=1 https://github.com/mattmc3/antidote.git ~/.antidote
+fi
+
 # 2. Load Antidote (Your Plugin Manager)
 source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 
