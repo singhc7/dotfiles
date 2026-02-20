@@ -1,5 +1,5 @@
 # =========================
-# Security & Secrets (CRITICAL)
+# Security & Secrets
 # =========================
 rclone.conf
 *.kdbx
