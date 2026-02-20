@@ -71,4 +71,4 @@ alias update-all='sudo dnf upgrade && flatpak update && snap refresh && pipx upg
 # 2. To clean and remove old dependencies
 alias clean-system='sudo dnf autoremove && flatpak uninstall --unused && pipx interpreter prune'
 
-
+fi
