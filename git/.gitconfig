@@ -1,0 +1,8 @@
+[commit]
+	gpgsign = true
+[user]
+	signingkey = C5057420D8EAD2BC
+	name = Chahat
+	email = chahat@disroot.org
+[gpg]
+	program = gpg
