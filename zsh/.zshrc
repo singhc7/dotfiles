@@ -83,19 +83,4 @@ alias update-all='sudo dnf upgrade && flatpak update && snap refresh && pipx upg
 
 # 2. To clean and remove old dependencies
 alias clean-system='sudo dnf autoremove && flatpak uninstall --unused && pipx interpreter prune'
-
-# --- Python temp web server script ---
-
-serve() {
-    # Use port 8000 or a custom one (e.g., `serve 9000`)
-    local port="${1:-8000}"
-    
-    # Automatically grabs active local IP
-    local ip=$(ip route get 1.1.1.1 | awk '{print $7}')
-    
-    echo "Serving current directory at: http://$ip:$port"
-    
-    python3 -m http.server "$port"
-}
-
 fi
