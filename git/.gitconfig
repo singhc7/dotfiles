@@ -17,3 +17,11 @@
 	rebase = true
 [core]
 	editor = nvim
+[alias]
+	st = status -sb
+	co = checkout
+	cob = checkout -b
+	br = branch
+	amend = commit --amend --no-edit
+	undo = reset --soft HEAD~1
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
