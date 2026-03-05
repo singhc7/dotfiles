@@ -24,3 +24,16 @@ Before deploying, ensure the following are installed on your system:
         stow alacritty
 
 *Note: Stow will automatically create symlinks from the folders in this repository to their appropriate locations in your home directory.*
+
+## License and Usage
+
+This repository and its configurations are licensed under the **PolyForm Noncommercial License 1.0.0**. 
+
+I believe in sharing knowledge and highly optimized workflows, but I also strictly protect my property rights. Here is exactly what that means for you:
+
+* **For Individuals (Free):** You are fully encouraged to clone, modify, and run these dotfiles for your personal study, hobby projects, private entertainment, and amateur pursuits. Use by educational institutions and charitable organizations is also completely free and permitted. 
+* **For Commercial Entities (Restricted):** You may **not** incorporate these configurations into any paid product, commercial service, or internal corporate environment. 
+
+The baseline is simple: if a price tag gets attached to my work, I am the one who gets paid. If you wish to use this setup for commercial purposes, you must contact me directly to negotiate a separate, paid commercial license.
+
+See the full legal terms in the [LICENSE](LICENSE) file.
