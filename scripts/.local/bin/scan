@@ -1,60 +1,106 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
-# --- AUTO-DETECT DEVICE ---
-DEVICE=$(scanimage -L | grep "Canon" | sed -n "s/.*device \`\(.*\)' is .*/\1/p")
+# Script Name:   scan.zsh
+# Description:   Interactive batch scanning utility with OCR and PDF stitching.
+#                Built for resilience during multi-page flatbed scans.
+# Dependencies:  sane-utils (scanimage), img2pdf, ocrmypdf
+
+# 1. Device Initialization
+
+# Dynamically locate the first available scanner on the system.
+DEVICE=$(scanimage -L | head -n 1 | sed -n "s/.*device \`\(.*\)' is .*/\1/p")
 
 if [[ -z "$DEVICE" ]]; then
-    echo "[!] Error: No Canon scanner found. Is it on?"
+    echo "[!] Error: No scanner detected. Ensure the device is powered on and connected."
     exit 1
 fi
+
+# 2. Scan Configuration
+
+echo "\n--- Scan Configuration ---"
+
+# Prompt for DPI with a fallback to 300 for standard document clarity.
+echo -n "Enter DPI [default: 300]: "
+read CUSTOM_DPI
+DPI=${CUSTOM_DPI:-300}
+
+# Prompt for paper size and set corresponding dimensions (in mm) for scanimage.
+echo "Select Paper Size:"
+echo "  1) Letter (Default - 8.5x11\")"
+echo "  2) A4 (210x297mm)"
+echo "  3) Legal (8.5x14\")"
+echo -n "Choice [1/2/3]: "
+read SIZE_CHOICE
+
+case $SIZE_CHOICE in
+2)
+    SCAN_X="210"
+    SCAN_Y="297"
+    PDF_SIZE="A4"
+    ;;
+3)
+    SCAN_X="215.9"
+    SCAN_Y="355.6"
+    PDF_SIZE="Legal"
+    ;;
+*)
+    SCAN_X="215.9"
+    SCAN_Y="279.4"
+    PDF_SIZE="Letter"
+    ;;
+esac
+
+# 3. Environment Setup
 
 TEMP_DIR=$(mktemp -d)
 PAGE_NUM=1
 FINAL_OUTPUT="${1:-scan_$(date +%Y%m%d_%H%M%S)}.pdf"
 
-echo "[-] Starting Batch Scan (Resilient Mode | 300 DPI | Color)"
-echo "[-] Detected Device: $DEVICE"
+echo "\n[-] Starting Batch Scan (Resilient Mode | $DPI DPI | Color | $PDF_SIZE)"
+echo "[-] Target Device: $DEVICE"
 
-# --- THE LOOP ---
+# 4. Main Scanning Loop
+
 while true; do
     CURRENT_FILE="$TEMP_DIR/page_$(printf "%03d" $PAGE_NUM).tiff"
-
     echo "\n--> Scanning Page $PAGE_NUM..."
 
-    # ATTEMPT LOOP: Try 3 times before giving up on this specific page
     SUCCESS=0
+
+    # Retry mechanism: Flatbed scanners occasionally report 'busy' under rapid usage.
+    # This loop attempts the scan up to 3 times with a cooldown period.
     for attempt in {1..3}; do
-        # Run scanimage. If it fails, we catch the error (set +e is implied by if check)
         if scanimage --device "$DEVICE" \
             --source "Flatbed" \
             --format=tiff \
             --mode Color \
-            --resolution 300 \
-            -x 215.9 -y 279.4 \
+            --resolution "$DPI" \
+            -x "$SCAN_X" -y "$SCAN_Y" \
             --progress \
             --output-file "$CURRENT_FILE"; then
+
             SUCCESS=1
             break
         else
             echo "\n[!] Scan failed (Attempt $attempt/3). Device might be busy."
             if [[ $attempt -lt 3 ]]; then
-                echo "[-] Cooling down for 4 seconds..."
+                echo "[-] Initiating 4-second cooldown..."
                 sleep 4
             fi
         fi
     done
 
-    # LOGIC: Did the page save?
+    # Evaluate attempt results and handle failure gracefully without losing prior pages.
     if [[ $SUCCESS -eq 1 ]]; then
-        echo "[+] Page $PAGE_NUM saved."
+        echo "[+] Page $PAGE_NUM captured successfully."
         ((PAGE_NUM++))
     else
         echo "[!] Critical failure on Page $PAGE_NUM."
-        echo "[-] Stopping scan here, but we will save previous pages."
+        echo "[-] Halting scan process. Previously scanned pages will be preserved."
         break
     fi
 
-    # PROMPT
+    # Pause briefly to prevent prompt collision with scanimage output.
     sleep 0.5
     if ! read -q "RESPONSE?Scan another page? [y/N]: "; then
         echo
@@ -63,19 +109,20 @@ while true; do
     echo
 done
 
-# --- POST PROCESSING ---
-# Check if at least page 001 exists
-if [[ -f "$TEMP_DIR/page_001.tiff" ]]; then
-    echo "\n[-] Stitching images (Lossless)..."
-    img2pdf "$TEMP_DIR"/page_*.tiff --output "$TEMP_DIR/raw.pdf" --pagesize Letter
+# 5. Post-Processing & Cleanup
 
-    echo "[-] Finalizing (OCR & Deskew)..."
+# Verify that at least one page was scanned successfully before attempting compilation.
+if [[ -f "$TEMP_DIR/page_001.tiff" ]]; then
+    echo "\n[-] Compiling pages into raw PDF..."
+    img2pdf "$TEMP_DIR"/page_*.tiff --output "$TEMP_DIR/raw.pdf" --pagesize "$PDF_SIZE"
+
+    echo "[-] Executing OCR and deskew optimization..."
     ocrmypdf --clean --deskew --optimize 1 "$TEMP_DIR/raw.pdf" "$FINAL_OUTPUT"
 
-    echo "\n[DONE] Saved to: $FINAL_OUTPUT"
+    echo "\n[DONE] Final document generated: $FINAL_OUTPUT"
 else
-    echo "[!] No pages were successfully scanned."
+    echo "[!] No pages were scanned. Exiting without output."
 fi
 
-# Cleanup
+# Securely remove the temporary directory and raw TIFF files.
 rm -rf "$TEMP_DIR"
