@@ -51,4 +51,3 @@ white   = "#ffffff"
 [cursor]
 style = { shape = "Beam", blinking = "Always" }
 vi_mode_style = { shape = "Block", blinking = "Off" } # Becomes a block when you use Vim!
-
