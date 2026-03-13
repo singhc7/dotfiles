@@ -16,7 +16,11 @@ source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 antidote load
 # 4. Load Powerlevel10k Visual Settings
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-# 5. Load Deno (if installed)
+
+# 5. Load fzf configuration
+[[ -f ~/.config/fzf/fzf.zsh ]] && source ~/.config/fzf/fzf.zsh
+
+# 6. Load Deno (if installed)
 if [ -f "$HOME/.deno/env" ]; then
     . "$HOME/.deno/env"
 fi

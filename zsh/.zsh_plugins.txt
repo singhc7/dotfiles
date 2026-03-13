@@ -7,3 +7,4 @@ romkatv/powerlevel10k
 # The Efficiency Tools (Fish-like features)
 zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-autosuggestions
+ohmyzsh/ohmyzsh path:plugins/fzf
