@@ -1,0 +1,40 @@
+# .bashrc.linux
+
+# --- NNN CONFIGURATION ---
+# 1. Plugins
+# o: fzopen (fuzzy search)
+# n: nuke (smart opener)
+# r: rclone (loads rclone to mount cloud drives)
+# z: zoxide (uses autojump feature from zoxide)
+# m: nmount to mount physical drives
+# t: t will be safe trash
+export NNN_PLUG='o:fzopen;n:nuke;r:rclone;m:nmount;z:autojump;t:trash'
+
+# 2. General Settings
+export NNN_OPTS="adeH"          # detail mode, use EDITOR, show hidden
+export NNN_ICONS=1
+export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+
+# 3. CD on Quit Function (Bash Version)
+n() {
+    # Block nesting of nnn in subshells
+    if [ -n "$NNNLVL" ] && [ "${NNNLVL:-0}" -ge 1 ]; then
+        echo "nnn is already running"
+        return
+    fi
+
+    # Run nnn
+    nnn "$@"
+
+    # On exit, read the tempfile and cd if it exists
+    if [ -f "$NNN_TMPFILE" ]; then
+        . "$NNN_TMPFILE"
+        rm -f "$NNN_TMPFILE" >/dev/null
+    fi
+}
+
+# --- Aliases ---
+# 1. To update all the packages
+alias update-all='sudo dnf upgrade && flatpak update && snap refresh && pipx upgrade-all'
+# 2. To clean and remove old dependencies
+alias clean-system='sudo dnf autoremove && flatpak uninstall --unused && pipx interpreter prune'
