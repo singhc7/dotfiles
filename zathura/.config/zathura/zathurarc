@@ -1,10 +1,63 @@
-# Smooth scrolling and better zoom steps
-set smooth-scroll true
-set zoom-step 10
+# Zathura Configuration
+# Optimized for performance, efficiency, and a clean Pitch Black/Cyan aesthetic
 
-# Copy to system clipboard automatically
+# --- Settings ---
+set scroll-step 50
+set zoom-step 10
 set selection-clipboard clipboard
 
+# Rendering optimizations
+set render-loading false
+set database sqlite
+set adjust-open width
+
+# UI Interface
+set statusbar-basename true
+set window-title-basename true
+set statusbar-h-padding 10
+set statusbar-v-padding 10
+set page-h-padding 1
+set page-v-padding 1
+set guioptions "" # Hide status bar and command line for a cleaner look
+
+# Search
+set incremental-search true
+
+# --- Colors (Pitch Black & Electric Cyan) ---
+set default-bg                  "#000000"
+set default-fg                  "#e0f7fa"
+set statusbar-bg                "#000000"
+set statusbar-fg                "#00e5ff"
+set inputbar-bg                 "#000000"
+set inputbar-fg                 "#00e5ff"
+
+set notification-bg             "#00e5ff"
+set notification-fg             "#000000"
+set notification-error-bg       "#ff1744"
+set notification-error-fg       "#000000"
+set notification-warning-bg     "#ffea00"
+set notification-warning-fg     "#000000"
+
+set highlight-color             "#00e676"
+set highlight-active-color      "#00e5ff"
+
+set completion-bg               "#121212"
+set completion-fg               "#e0f7fa"
+set completion-highlight-bg     "#00e5ff"
+set completion-highlight-fg     "#000000"
+
+set index-bg                    "#000000"
+set index-fg                    "#e0f7fa"
+set index-active-bg             "#00e5ff"
+set index-active-fg             "#000000"
+
+# Recolor mode (Dark Mode for documents)
+set recolor                     true
+set recolor-lightcolor          "#000000"
+set recolor-darkcolor           "#e0f7fa"
+set recolor-keephue             false
+
+# --- Keybindings ---
 # Navigation
 map u scroll half-up
 map d scroll half-down
@@ -12,27 +65,17 @@ map D toggle_page_mode
 map r rotate
 map R reload
 
-# Zooming (more intuitive)
+# Zooming
 map i zoom in
 map o zoom out
+map + zoom in
+map - zoom out
+map = zoom in
 
-# Jumping
-map [normal]     J zoom in
-map [normal]     K zoom out
+# Page navigation
+map [normal] <C-d> scroll half-down
+map [normal] <C-u> scroll half-up
 
-# Enable recolor by default (optional)
-set recolor "true"
-
-# Nord-ish Theme Colors
-set default-bg                  "#2E3440"
-set default-fg                  "#D8DEE9"
-
-set statusbar-bg                "#2E3440"
-set statusbar-fg                "#D8DEE9"
-
-set inputbar-bg                 "#2E3440"
-set inputbar-fg                 "#D8DEE9"
-
-# The actual document colors (Recolor mode)
-set recolor-lightcolor          "#2E3440"  # Background
-set recolor-darkcolor           "#ECEFF4"  # Text
+# Misc
+map [normal] p print
+map [normal] g goto top
