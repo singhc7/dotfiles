@@ -29,3 +29,12 @@ gh/hosts.yml
 *~
 .viminfo
 .zsh_plugins.zsh
+
+# =========================
+# Tool Specific Caches
+# =========================
+# nnn: Ignore backups, bookmarks, sessions, and last directory
+nnn/.config/nnn/*.tar.gz
+nnn/.config/nnn/sessions/
+nnn/.config/nnn/bookmarks/
+nnn/.config/nnn/.lastd
