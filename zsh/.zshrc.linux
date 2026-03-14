@@ -1,21 +1,17 @@
 # --- NNN CONFIGURATION ---
 # 1. Plugins
-# p: preview-tui (split pane)
 # o: fzopen (fuzzy search)
 # n: nuke (smart opener)
 # r: rclone (loads rclone to mount cloud drives)
 # z: zoxide (uses autojump feature from zoxide)
 # m: nmount to mount physical drives
 # t: t will be safe trash
-export NNN_PLUG='p:preview-tui;o:fzopen;n:nuke;r:rclone;m:nmount;z:autojump;t:trash'
+export NNN_PLUG='o:fzopen;n:nuke;r:rclone;m:nmount;z:autojump;t:trash'
 
-# 2. Preview Settings
-export NNN_FIFO='/tmp/nnn.fifo'
-export NNN_IMGVIEWER='chafa' # Use chafa for images
-# This tells nnn to use tmux for splits
-export NNN_SPLIT_PREVIEW_TMUX=1
-# this is to render icons
+# 2. General Settings
+export NNN_OPTS="adeH"          # detail mode, use EDITOR, show hidden
 export NNN_ICONS=1
+export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
 
 # 3. CD on Quit Function (ZSH Version)
 n() {
@@ -24,10 +20,10 @@ n() {
         echo "nnn is already running"
         return
     fi
-    # The behaviour is controlled by NNN_TMPFILE
-    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+
     # Run nnn
     nnn "$@"
+
     # On exit, read the tempfile and cd if it exists
     if [ -f "$NNN_TMPFILE" ]; then
         . "$NNN_TMPFILE"
