@@ -1,0 +1,41 @@
+#!/usr/bin/env sh
+
+# Description: Mount Rclone remotes (Restored functionality)
+# Dependencies: rclone, fzf
+
+# 1. Verify dependencies
+if ! type rclone >/dev/null 2>&1 || ! type fzf >/dev/null 2>&1; then
+    echo "Error: rclone and fzf are required."
+    read -r _
+    exit 1
+fi
+
+# 2. Select Remote
+# We use fzf to pick from the list of remotes in rclone.conf
+remote=$(rclone listremotes | fzf --prompt="Mount Remote > " --height=40% --layout=reverse)
+
+# Exit if user cancelled
+if [ -z "$remote" ]; then
+    exit 0
+fi
+
+# 3. Mount
+# Clean name (remove colon) and define mount point
+name="${remote%:}"
+target="$HOME/mnt/$name"
+mkdir -p "$target"
+
+# Only mount if not already mounted
+if ! grep -qs "$target" /proc/mounts; then
+    rclone mount "$remote" "$target" --daemon
+fi
+
+# 4. Enter directory
+# NNN_PIPE is how plugins tell nnn to change directory
+if [ -n "$NNN_PIPE" ]; then
+    echo "cd $target" > "$NNN_PIPE"
+else
+    # Fallback if running standalone
+    echo "Mounted at: $target"
+    ls -lh "$target"
+fi
