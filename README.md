@@ -27,7 +27,16 @@ Before deploying, ensure the following are installed on your system:
 
 ## License and Usage
 
-This repository and its configurations are licensed under the **PolyForm Noncommercial License 1.0.0**.
+This repository and its configurations are dual-licensed under two non-commercial licenses. You may choose to use this work under the terms of either:
+
+1.  **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)**
+    *   Best for sharing with the open-source community.
+    *   Requires attribution and sharing your own changes under the same license.
+    *   Prohibits commercial use.
+2.  **PolyForm Noncommercial License 1.0.0**
+    *   Best for clear, modern legal protection.
+    *   Explicitly defines "non-commercial" to protect property rights.
+    *   Prohibits commercial use without a separate, negotiated license.
 
 I believe in sharing knowledge and highly optimized workflows, but I also strictly protect my property rights. Here is exactly what that means for you:
 
