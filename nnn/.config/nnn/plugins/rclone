@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
-# Description: Mount Rclone remotes (Restored functionality)
-# Dependencies: rclone, fzf
+# Description: Mount/Unmount Rclone remotes
+# Dependencies: rclone, fzf, fuse3 (or fuse/macfuse)
 
 # 1. Verify dependencies
 if ! type rclone >/dev/null 2>&1 || ! type fzf >/dev/null 2>&1; then
@@ -19,21 +19,66 @@ if [ -z "$remote" ]; then
     exit 0
 fi
 
-# 3. Mount
+# 3. Mount/Unmount
 # Clean name (remove colon) and define mount point
 name="${remote%:}"
 target="$HOME/mnt/$name"
 mkdir -p "$target"
 
-# Only mount if not already mounted
-if ! grep -qs "$target" /proc/mounts; then
-    rclone mount "$remote" "$target" --daemon
+# Check if already mounted
+is_mounted() {
+    if type mountpoint >/dev/null 2>&1; then
+        mountpoint -q "$1"
+    else
+        mount | grep -q " on $1 "
+    fi
+}
+
+if is_mounted "$target"; then
+    printf "Remote '%s' is already mounted at '%s'.\n" "$name" "$target"
+    printf "Unmount (u), Go to (g), Cancel (c) [default: g]? "
+    read -r action
+
+    if [ "$action" = "u" ]; then
+        echo "Unmounting $target..."
+        if type fusermount3 >/dev/null 2>&1; then
+            fusermount3 -u "$target"
+        elif type fusermount >/dev/null 2>&1; then
+            fusermount -u "$target"
+        else
+            umount "$target"
+        fi
+        exit 0
+    elif [ "$action" = "c" ]; then
+        exit 0
+    fi
+    # Fall through to "Go to" (default)
+else
+    echo "Mounting $remote to $target..."
+
+    # --vfs-cache-mode full is essential for many apps to work with rclone mounts
+    rclone mount "$remote" "$target" \
+        --daemon \
+        --vfs-cache-mode full \
+        --vfs-cache-max-size 10G \
+        --vfs-cache-max-age 24h \
+        --vfs-read-chunk-size 128M \
+        --vfs-read-chunk-size-limit off
+
+    if [ $? -ne 0 ]; then
+        echo "Error: Mount failed. Ensure fuse is installed and configured."
+        read -r _
+        exit 1
+    fi
+
+    # Wait a bit for the mount to be established
+    sleep 1
 fi
 
 # 4. Enter directory
 # NNN_PIPE is how plugins tell nnn to change directory
 if [ -n "$NNN_PIPE" ]; then
-    echo "cd $target" > "$NNN_PIPE"
+    printf "%s" "0c$target" > "$NNN_PIPE"
 else
     # Fallback if running standalone
     echo "Mounted at: $target"
