@@ -53,7 +53,6 @@ return {
       })
 
       local servers = {
-        stylua = {},
         lua_ls = {
           on_init = function(client)
             if client.workspace_folders then
@@ -77,9 +76,24 @@ return {
           end,
           settings = { Lua = {} },
         },
+        pyright = {},
+        ruff = {},
+        bashls = {},
+        clangd = {},
+        jdtls = {},
+      }
+
+      local tools = {
+        'stylua',
+        'shellcheck',
+        'shfmt',
+        'google-java-format',
+        'clang-format',
+        'cppcheck',
       }
 
       local ensure_installed = vim.tbl_keys(servers or {})
+      vim.list_extend(ensure_installed, tools)
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       for name, server in pairs(servers) do
