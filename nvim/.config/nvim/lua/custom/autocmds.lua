@@ -39,25 +39,3 @@ vim.api.nvim_create_autocmd('Filetype', {
   group = text,
   command = 'setlocal spell tw=80 colorcolumn=81',
 })
-
--- Map Caps Lock to Escape only when Neovim is in focus
--- This uses GNOME gsettings, as detected in your environment.
-local function set_caps_to_esc()
-  vim.fn.jobstart 'gsettings set org.gnome.desktop.input-sources xkb-options "[\'caps:escape\']"'
-end
-
-local function reset_caps()
-  vim.fn.jobstart 'gsettings reset org.gnome.desktop.input-sources xkb-options'
-end
-
-local caps_group = vim.api.nvim_create_augroup('caps-to-esc', { clear = true })
-
-vim.api.nvim_create_autocmd({ 'VimEnter', 'FocusGained' }, {
-  group = caps_group,
-  callback = set_caps_to_esc,
-})
-
-vim.api.nvim_create_autocmd({ 'VimLeave', 'FocusLost' }, {
-  group = caps_group,
-  callback = reset_caps,
-})
