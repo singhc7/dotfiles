@@ -15,36 +15,36 @@ y = 8
 size = 14
 
 [colors.primary]
-background = '#000000'
-foreground = '#ffffff'
+background = '#1d2021'
+foreground = '#ebdbb2'
 
 [colors.cursor]
-text = "#000000"
-cursor = "#00e5ff"
+text = "#1d2021"
+cursor = "#ebdbb2"
 
 [colors.selection]
-text = "#000000"
-background = "#00e5ff"
+text = "#1d2021"
+background = "#ebdbb2"
 
 [colors.normal]
-black   = '#01060E'
-red     = '#EA6C73'
-green   = '#91B362'
-yellow  = '#F9AF4F'
-blue    = '#53BDFA'
-magenta = '#FAE994'
-cyan    = '#90E1C6'
-white   = '#C7C7C7'
+black   = '#1d2021'
+red     = '#fb4934'
+green   = '#b8bb26'
+yellow  = '#fabd2f'
+blue    = '#83a598'
+magenta = '#d3869b'
+cyan    = '#8ec07c'
+white   = '#d5c4a1'
 
 [colors.bright]
-black   = '#686868'
-red     = '#F07178'
-green   = '#C2D94C'
-yellow  = '#FFB454'
-blue    = '#59C2FF'
-magenta = '#FFEE99'
-cyan    = '#95E6CB'
-white   = '#FFFFFF'
+black   = '#665c54'
+red     = '#fb4934'
+green   = '#b8bb26'
+yellow  = '#fabd2f'
+blue    = '#83a598'
+magenta = '#d3869b'
+cyan    = '#8ec07c'
+white   = '#fbf1c7'
 
 [cursor]
 style = { shape = "Beam", blinking = "Always" }
