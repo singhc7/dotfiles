@@ -35,3 +35,18 @@ if [[ "$OSTYPE" == darwin* ]]; then
     # macOS specific aliases (if any)
     :
 fi
+
+# --- Rclone Power Tools ---
+# Optimized mount (high-performance VFS caching)
+alias rcmount='rclone mount --vfs-cache-mode full \
+                           --vfs-cache-max-age 24h \
+                           --vfs-cache-max-size 10G \
+                           --vfs-read-chunk-size 128M \
+                           --vfs-read-chunk-size-limit 1G \
+                           --daemon'
+
+# Fast and safe mirror sync
+alias rcsync='rclone sync -P --track-renames --fix-case'
+
+# Interactive remote file explorer
+alias rcls='rclone lsjson --human-readable --stat'

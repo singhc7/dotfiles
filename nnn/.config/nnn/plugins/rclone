@@ -63,7 +63,11 @@ else
         --vfs-cache-max-size 10G \
         --vfs-cache-max-age 24h \
         --vfs-read-chunk-size 128M \
-        --vfs-read-chunk-size-limit off
+        --vfs-read-chunk-size-limit 1G \
+        --vfs-read-ahead 256M \
+        --dir-cache-time 1000h \
+        --no-modtime \
+        --no-checksum
 
     if [ $? -ne 0 ]; then
         echo "Error: Mount failed. Ensure fuse is installed and configured."
