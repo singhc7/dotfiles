@@ -10,6 +10,14 @@ if [ -f "$HOME/.deno/env" ]; then
     . "$HOME/.deno/env"
 fi
 
+# --- Nix ---
+# Guarded Nix environment initialization
+if [[ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
+    . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+elif [[ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
+    . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+fi
+
 # --- zoxide ---
 # Initialize zoxide (defines z and zi)
 if command -v zoxide >/dev/null 2>&1; then

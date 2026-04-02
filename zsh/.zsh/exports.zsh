@@ -13,8 +13,12 @@ export VISUAL='nvim'
 # --- Path Modifications ---
 # User local bin
 export PATH="$HOME/.local/bin:$PATH"
-# NPM global packages
+# --- NPM global packages ---
 export PATH="$HOME/.npm-global/bin:$PATH"
+
+# --- Nix ---
+# Enable experimental features for the modern Nix CLI (nix profile, flakes)
+export NIX_CONFIG="experimental-features = nix-command flakes"
 
 # --- NNN Configuration ---
 # Plugins:

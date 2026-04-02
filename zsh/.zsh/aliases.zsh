@@ -16,27 +16,24 @@ if command -v eza >/dev/null 2>&1; then
     alias l.='eza -d .* --icons --group-directories-first'
 fi
 
-# --- Platform Specific ---
-if [[ "$OSTYPE" == linux* ]]; then
-    # Update system, flatpaks, snaps, and package manager specific apps/packages
-    alias update-all='sudo dnf upgrade && \
-                      flatpak update && \
-                      snap refresh && \
-                      { command -v rustup >/dev/null && rustup update || true } && \
-                      { command -v cargo-install-update >/dev/null && cargo install-update -a || true } && \
-                      { command -v npm >/dev/null && npm update -g || true }'
+# --- Package Management (DNF & Nix) ---
+# Update system and user packages with proper guard rails
+alias upsystem='{ command -v dnf >/dev/null 2>&1 && sudo dnf upgrade -y || true } && \
+                  { command -v nix >/dev/null 2>&1 && nix profile upgrade --all || true } && \
+                  { command -v nix-channel >/dev/null 2>&1 && nix-channel --update || true }'
 
-    # Clean up system caches, unused packages, and package manager artifacts
-    alias clean-system='sudo dnf autoremove && \
-                        flatpak uninstall --unused && \
-                        { command -v pip >/dev/null && pip cache purge || true } && \
-                        { command -v npm >/dev/null && npm cache clean --force || true } && \
-                        { command -v cargo >/dev/null && { command -v cargo-cache >/dev/null && cargo cache -a || true }; true }'
-fi
+# Clean up system caches and unused packages
+alias clsystem='{ command -v dnf >/dev/null 2>&1 && sudo dnf autoremove -y && sudo dnf clean all || true } && \
+                    { command -v nix-collect-garbage >/dev/null 2>&1 && nix-collect-garbage -d || true }'
 
-if [[ "$OSTYPE" == darwin* ]]; then
-    # macOS specific aliases (if any)
-    :
+# Nix shorthand for common operations
+if command -v nix >/dev/null 2>&1; then
+    alias ns="nix-shell"
+    alias np="nix profile"
+    alias na="nix profile add" # Shorthand to install from nixpkgs
+    alias nu="nix profile upgrade"
+    alias nr="nix profile remove"
+    alias nls="nix profile list"
 fi
 
 # --- Rclone Power Tools ---
