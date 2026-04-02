@@ -47,13 +47,3 @@ for config in functions aliases; do
         source "$ZSH_CONFIG_DIR/$config.zsh"
     fi
 done
-
-# ==========================================
-# Platform Specific (Legacy)
-# ==========================================
-# Keeping these for any future machine-specific quick overrides
-if [[ "$OSTYPE" == linux* ]]; then
-    [[ -f ~/.zshrc.linux ]] && source ~/.zshrc.linux
-elif [[ "$OSTYPE" == darwin* ]]; then
-    [[ -f ~/.zshrc.macos ]] && source ~/.zshrc.macos
-fi

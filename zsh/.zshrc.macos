@@ -1,7 +1,0 @@
-# macOS specific Zsh configurations
-# This file is sourced in .zshrc if OSTYPE is darwin
-
-# Link Alacritty font for macOS
-if [[ ! -L ~/.config/alacritty/font-os.toml ]] || [[ "$(readlink ~/.config/alacritty/font-os.toml)" != *"font-mac.toml"* ]]; then
-    ln -sf ~/.config/alacritty/font-mac.toml ~/.config/alacritty/font-os.toml
-fi

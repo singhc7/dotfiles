@@ -1,7 +1,0 @@
-# Linux specific Zsh configurations
-# This file is sourced in .zshrc if OSTYPE is linux-gnu
-
-# Link Alacritty font for Linux
-if [[ ! -L ~/.config/alacritty/font-os.toml ]] || [[ "$(readlink ~/.config/alacritty/font-os.toml)" != *"font-linux.toml"* ]]; then
-    ln -sf ~/.config/alacritty/font-linux.toml ~/.config/alacritty/font-os.toml
-fi

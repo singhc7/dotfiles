@@ -14,6 +14,22 @@ y = 8
 [font]
 size = 14
 
+[font.normal]
+family = "UbuntuSansMonoNerdFont"
+style = "Regular"
+
+[font.bold]
+family = "UbuntuSansMonoNerdFont"
+style = "Bold"
+
+[font.italic]
+family = "UbuntuSansMonoNerdFont"
+style = "Italic"
+
+[font.bold_italic]
+family = "UbuntuSansMonoNerdFont"
+style = "Bold Italic"
+
 [colors.primary]
 background = '#1d2021'
 foreground = '#ebdbb2'
