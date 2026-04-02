@@ -2,6 +2,11 @@
 # Environment Variables & Exports
 # ==========================================
 
+# --- SSH Agent (KeePassXC Workflow) ---
+# Point SSH_AUTH_SOCK to the socket file KeePassXC is listening on.
+# This allows 'ssh' and 'ssh-add' to use keys stored in KeePassXC.
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
 # --- Editor ---
 export EDITOR='nvim'
 export VISUAL='nvim'
