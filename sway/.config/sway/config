@@ -4,10 +4,10 @@
 #
 # Read `man 5 sway` for a complete reference.
 
-# --- SSH Agent (KeePassXC Workflow) ---
-# We don't start ssh-agent manually because KeePassXC provides its own agent.
-# This updates the D-Bus and systemd user environment so all apps can find the socket.
-# Ensure KeePassXC is configured to use: $XDG_RUNTIME_DIR/ssh-agent.socket
+# --- SSH Agent (Systemd Background Service) ---
+# Use the systemd user socket for a robust, background ssh-agent.
+# This eliminates race conditions and ensures the socket is always available.
+exec systemctl --user start ssh-agent.socket
 exec dbus-update-activation-environment --systemd SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
 ### Variables
 #
