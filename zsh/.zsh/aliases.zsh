@@ -16,21 +16,42 @@ if command -v eza >/dev/null 2>&1; then
     alias l.='eza -d .* --icons --group-directories-first'
 fi
 
-# --- Package Management (DNF & Nix) ---
+# --- Package Management (pacman & Nix{through lix}) ---
 # Update system and user packages with proper guard rails
-alias upsystem='{ command -v dnf >/dev/null 2>&1 && sudo dnf upgrade -y || true } && \
+# pacman
+#  -S : Sync operations (interact with remote repository databases)
+#  -y : Refresh (download fresh copies of the master package databases from servers)
+#  -u : Sysupgrade (compare local packages to the fresh databases and upgrade them)
+alias upsystem='{ command -v pacman >/dev/null 2>&1 && sudo pacman -Syu || true } && \
                   { command -v nix >/dev/null 2>&1 && nix profile upgrade --all || true } && \
                   { command -v nix-channel >/dev/null 2>&1 && nix-channel --update || true }'
 
 # Clean up system caches and unused packages
-alias clsystem='{ command -v dnf >/dev/null 2>&1 && sudo dnf autoremove -y && sudo dnf clean all || true } && \
+# pacman -Qdtq
+#  -Q : Query the local package database
+#  -d : Filter for packages installed as dependencies
+#  -t : Filter for unrequired packages (true orphans)
+#  -q : Quiet output (raw package names only, stripped of versions/descriptions)
+
+#   | : Pipe the raw list of names to the next command
+
+# pacman -Rns -
+#  -R : Remove packages
+#  -n : Nosave (completely delete config files instead of making .pacsave backups)
+#  -s : Recursive (remove the target package's unused dependencies as well)
+#   - : Read the target package names from standard input (the pipe)
+
+# pacman -Sc
+#  -S : Sync operations (cache management is categorized under sync commands)
+#  -c : Clean (a single 'c' removes cached packages that are no longer installed)
+alias clsystem='{ command -v pacman >/dev/null 2>&1 && pacman -Qdtq | sudo pacman -Rns - && sudo pacman -Sc || true } && \
                     { command -v nix-collect-garbage >/dev/null 2>&1 && nix-collect-garbage -d || true }'
 
 # Nix shorthand for common operations
 if command -v nix >/dev/null 2>&1; then
     alias ns="nix-shell"
     alias np="nix profile"
-    alias na="nix profile add" # Shorthand to install from nixpkgs
+    alias ni="nix profile install" # Shorthand to install from nixpkgs
     alias nu="nix profile upgrade"
     alias nr="nix profile remove"
     alias nls="nix profile list"
