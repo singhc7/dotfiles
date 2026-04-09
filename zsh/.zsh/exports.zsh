@@ -31,17 +31,6 @@ export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
 export NNN_COLORS=2                    # Use 16 colors (matched to terminal ANSI colors)
 export NNN_FCOLORS='c1e2272e006033f7c6d6abc4' # Gruvbox-friendly coloring using ANSI palette
 
-# --- Wayland Performance & Hardware Acceleration ---
-# These variables force applications to bypass XWayland and use native Wayland protocols.
-# This ensures hardware acceleration is used for UI rendering and video playback,
-# significantly reducing CPU overhead on high-refresh (120Hz) displays.
-
-export QT_QPA_PLATFORM=wayland          # Forces Qt5/Qt6 apps (VLC, OBS, etc.) to use Wayland
-export CLUTTER_BACKEND=wayland         # Forces Clutter-based apps to use Wayland
-export SDL_VIDEODRIVER=wayland          # Forces SDL2 games/apps to use Wayland
-export _JAVA_AWT_WM_NONREPARENTING=1    # Fixes blank window issues for Java apps on tiling WMs
-export ELECTRON_OZONE_PLATFORM_HINT=auto # Modern Electron apps (VSCode, Discord, etc.) use Wayland
-
 # --- Rclone Power Settings ---
 # Boosts performance for syncs, copies, and mounts without touching rclone.conf
 export RCLONE_TRANSFERS=8              # More parallel file transfers
