@@ -108,6 +108,7 @@ return {
 					end,
 					settings = { Lua = {} },
 				},
+				taplo = {},
 				pyright = {},
 				ruff = {},
 				bashls = {},
@@ -153,6 +154,7 @@ return {
 			}
 
 			local tools = {
+				"taplo",
 				"stylua",
 				"shellcheck",
 				"shfmt",

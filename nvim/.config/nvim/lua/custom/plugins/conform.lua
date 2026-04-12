@@ -30,6 +30,7 @@ return {
 			end,
 			formatters_by_ft = {
 				lua = { "stylua" },
+				toml = { "taplo" },
 				python = { "ruff_format" },
 				sh = { "shfmt", "shellcheck" },
 				bash = { "shfmt", "shellcheck" },
@@ -37,6 +38,7 @@ return {
 				c = { "clang-format" },
 				cpp = { "clang-format" },
 				java = { "google-java-format" },
+				json = { "clang-format" },
 			},
 		},
 	},
