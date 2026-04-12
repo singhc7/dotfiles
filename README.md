@@ -1,6 +1,6 @@
 # Dotfiles
 
-A minimalist, personal collection of configuration files optimized for a resource-efficient workflow across Fedora Linux and macOS.
+A minimalist, personal collection of configuration files optimized for a resource-efficient workflow across Linux.
 
 ## Overview
 This repository manages my core terminal environment and tooling configurations. It relies on [GNU Stow](https://www.gnu.org/software/stow/) to handle symlinking these configuration files directly into the home directory, keeping the system clean and the dotfiles easily version-controlled.
