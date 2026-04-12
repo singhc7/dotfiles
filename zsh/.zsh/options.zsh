@@ -3,8 +3,8 @@
 # ==========================================
 
 # --- Vi Mode ---
-bindkey -v              # Enable vi mode
-export KEYTIMEOUT=1     # Reduce escape delay to 10ms
+bindkey -v          # Enable vi mode
+export KEYTIMEOUT=1 # Reduce escape delay to 10ms
 
 # Better searching in vi mode
 # (fzf usually handles these, but good to have fallbacks)
@@ -40,8 +40,8 @@ ZSH_HIGHLIGHT_STYLES[alias]='bold'
 ZSH_HIGHLIGHT_STYLES[builtin]='bold'
 ZSH_HIGHLIGHT_STYLES[function]='bold'
 ZSH_HIGHLIGHT_STYLES[precommand]='bold'
-ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='none'
-ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='none'
+ZSH_HIGHLIGHT_STYLES[single - hyphen - option]='none'
+ZSH_HIGHLIGHT_STYLES[double - hyphen - option]='none'
 
 # Other styling
 ZSH_HIGHLIGHT_STYLES[path]='underline'
@@ -67,8 +67,8 @@ setopt hist_save_no_dups
 setopt hist_ignore_space
 
 # --- General ---
-setopt autocd           # If a command is a directory, cd into it
-setopt interactivecomments  # Allow comments in interactive shells
+setopt autocd              # If a command is a directory, cd into it
+setopt interactivecomments # Allow comments in interactive shells
 # setopt magicequalsubst  # Completion for path-like arguments
 # setopt notify           # Notify of background job completion immediately
 # setopt prompt_subst     # Allow parameter expansion in prompt
