@@ -53,7 +53,7 @@ ZSH_HIGHLIGHT_STYLES[globbing]='none'
 zmodload zsh/terminfo
 preexec() {
     # Reset all text attributes (bold, italics, etc.) before command output
-    print -rn "$terminfo"[sgr0]
+    print -rn "$terminfo[sgr0]"
 }
 
 # --- History ---
