@@ -40,8 +40,8 @@ ZSH_HIGHLIGHT_STYLES[alias]='bold'
 ZSH_HIGHLIGHT_STYLES[builtin]='bold'
 ZSH_HIGHLIGHT_STYLES[function]='bold'
 ZSH_HIGHLIGHT_STYLES[precommand]='bold'
-ZSH_HIGHLIGHT_STYLES[single - hyphen - option]='none'
-ZSH_HIGHLIGHT_STYLES[double - hyphen - option]='none'
+ZSH_HIGHLIGHT_STYLES['single-hyphen-option']='none'
+ZSH_HIGHLIGHT_STYLES['double-hyphen-option']='none'
 
 # Other styling
 ZSH_HIGHLIGHT_STYLES[path]='underline'
@@ -53,7 +53,7 @@ ZSH_HIGHLIGHT_STYLES[globbing]='none'
 zmodload zsh/terminfo
 preexec() {
     # Reset all text attributes (bold, italics, etc.) before command output
-    print -rn $terminfo[sgr0]
+    print -rn "$terminfo"[sgr0]
 }
 
 # --- History ---

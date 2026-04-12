@@ -13,7 +13,7 @@ if [[ ! -d ~/.antidote ]]; then
 fi
 
 # 2. Load Antidote (Your Plugin Manager)
-source ${ZDOTDIR:-~}/.antidote/antidote.zsh
+source "${ZDOTDIR:-~}"/.antidote/antidote.zsh
 
 # 3. Load your plugins (Includes Powerlevel10k, Autosuggestions, etc.)
 antidote load
