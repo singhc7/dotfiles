@@ -110,7 +110,27 @@ return {
 				},
 				taplo = {},
 				pyright = {},
+				marksman = {},
 				ruff = {},
+				harper_ls = {
+					filetypes = { "markdown", "text", "gitcommit" },
+					settings = {
+						["harper-ls"] = {
+							linters = {
+								spell_check = true,
+								spelled_numbers = false,
+								an_a = true,
+								sentence_capitalization = true,
+								unclosed_quotes = true,
+								wrong_quotes = false,
+								long_sentences = true,
+								repeated_words = true,
+								spaces_between_words = true,
+								matcher = true,
+							},
+						},
+					},
+				},
 				bashls = {},
 				clangd = {
 					-- Allow attaching to single files by falling back to current directory
@@ -154,12 +174,12 @@ return {
 			}
 
 			local tools = {
-				"taplo",
 				"stylua",
 				"shellcheck",
 				"shfmt",
 				"google-java-format",
 				"clang-format",
+				"prettier",
 			}
 
 			local ensure_installed = vim.tbl_keys(servers or {})

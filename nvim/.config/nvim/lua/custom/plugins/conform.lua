@@ -28,8 +28,14 @@ return {
 					}
 				end
 			end,
+			formatters = {
+				prettier = {
+					prepend_args = { "--prose-wrap", "always" },
+				},
+			},
 			formatters_by_ft = {
 				lua = { "stylua" },
+				markdown = { "prettier" },
 				toml = { "taplo" },
 				python = { "ruff_format" },
 				sh = { "shfmt", "shellcheck" },
