@@ -1,48 +1,67 @@
 # Dotfiles
 
-A minimalist, personal collection of configuration files optimized for a resource-efficient workflow across Linux.
+A minimalist, personal collection of configuration files optimized for a
+resource-efficient workflow across Linux.
 
 ## Overview
-This repository manages my core terminal environment and tooling configurations. It relies on [GNU Stow](https://www.gnu.org/software/stow/) to handle symlinking these configuration files directly into the home directory, keeping the system clean and the dotfiles easily version-controlled.
 
+This repository manages my core terminal environment and tooling configurations.
+It relies on [GNU Stow](https://www.gnu.org/software/stow/) to handle symlinking
+these configuration files directly into the home directory, keeping the system
+clean and the dotfiles easily version-controlled.
 
 ## Prerequisites
+
 Before deploying, ensure the following are installed on your system:
-* `git`
-* `stow`
+
+- `git`
+- `stow`
 
 ## Installation
 
-1. **Clone the repository** into your home directory:
+1.  **Clone the repository** into your home directory:
 
         git clone https://github.com/singhc7/dotfiles.git ~/.dotfiles
         cd ~/.dotfiles
 
-2. **Deploy configurations** using Stow. Run this command for each piece of software you want to configure:
+2.  **Deploy configurations** using Stow. Run this command for each piece of
+    software you want to configure:
 
         stow zsh
         stow alacritty
 
-*Note: Stow will automatically create symlinks from the folders in this repository to their appropriate locations in your home directory.*
+_Note: Stow will automatically create symlinks from the folders in this
+repository to their appropriate locations in your home directory._
 
 ## License and Usage
 
-This repository and its configurations are dual-licensed under two non-commercial licenses. You may choose to use this work under the terms of either:
+This repository and its configurations are dual-licensed under two
+non-commercial licenses. You may choose to use this work under the terms of
+either:
 
-1.  **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)**
-    *   Best for sharing with the open-source community.
-    *   Requires attribution and sharing your own changes under the same license.
-    *   Prohibits commercial use.
+1.  **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+    (CC BY-NC-SA 4.0)**
+    - Best for sharing with the open-source community.
+    - Requires attribution and sharing your own changes under the same license.
+    - Prohibits commercial use.
 2.  **PolyForm Noncommercial License 1.0.0**
-    *   Best for clear, modern legal protection.
-    *   Explicitly defines "non-commercial" to protect property rights.
-    *   Prohibits commercial use without a separate, negotiated license.
+    - Best for clear, modern legal protection.
+    - Explicitly defines "non-commercial" to protect property rights.
+    - Prohibits commercial use without a separate, negotiated license.
 
-I believe in sharing knowledge and highly optimized workflows, but I also strictly protect my property rights. Here is exactly what that means for you:
+I believe in sharing knowledge and highly optimized workflows, but I also
+strictly protect my property rights. Here is exactly what that means for you:
 
-* **For Individuals (Free):** You are fully encouraged to clone, modify, and run these dotfiles for your personal study, hobby projects, private entertainment, and amateur pursuits. Use by educational institutions and charitable organizations is also completely free and permitted.
-* **For Commercial Entities (Restricted):** You may **not** incorporate these configurations into any paid product, commercial service, or internal corporate environment.
+- **For Individuals (Free):** You are fully encouraged to clone, modify, and run
+  these dotfiles for your personal study, hobby projects, private entertainment,
+  and amateur pursuits. Use by educational institutions and charitable
+  organizations is also completely free and permitted.
+- **For Commercial Entities (Restricted):** You may **not** incorporate these
+  configurations into any paid product, commercial service, or internal
+  corporate environment.
 
-The baseline is simple: if a price tag gets attached to my work, I am the one who gets paid. If you wish to use this setup for commercial purposes, you must contact me directly to negotiate a separate, paid commercial license.
+The baseline is simple: if a price tag gets attached to my work, I am the one
+who gets paid. If you wish to use this setup for commercial purposes, you must
+contact me directly to negotiate a separate, paid commercial license.
 
 See the full legal terms in the [LICENSE](LICENSE) file.
