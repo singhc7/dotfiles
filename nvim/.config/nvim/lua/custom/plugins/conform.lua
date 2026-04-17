@@ -43,6 +43,7 @@ return {
 				zsh = { "shfmt", "shellcheck" },
 				c = { "clang-format" },
 				cpp = { "clang-format" },
+				css = { "prettier" },
 				java = { "google-java-format" },
 				json = { "clang-format" },
 			},
