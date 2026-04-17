@@ -1,3 +1,6 @@
+vim.filetype.add({
+	pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
+})
 return {
 	{
 		-- Main LSP Configuration
@@ -109,6 +112,7 @@ return {
 					settings = { Lua = {} },
 				},
 				taplo = {},
+				hyprls = {},
 				pyright = {},
 				marksman = {},
 				ruff = {},
