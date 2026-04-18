@@ -27,7 +27,7 @@ system, installs important packages via `pacman`, and sets up all symlinks.
 1.  **Clone the repository** into your home directory:
 
     ```bash
-    git clone [https://github.com/singhc7/dotfiles.git](https://github.com/singhc7/dotfiles.git) ~/dotfiles
+    git clone https://github.com/singhc7/dotfiles ~/dotfiles
     cd ~/dotfiles
     ```
 
@@ -43,7 +43,7 @@ If you are not using Arch Linux, you can manually install the configurations:
 1.  **Clone the repository:**
 
     ```bash
-    git clone [https://github.com/singhc7/dotfiles.git](https://github.com/singhc7/dotfiles.git) ~/dotfiles
+    git clone https://github.com/singhc7/dotfiles ~/dotfiles
     cd ~/dotfiles
     ```
 
