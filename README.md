@@ -19,16 +19,40 @@ Before deploying, ensure the following are installed on your system:
 
 ## Installation
 
+### Automated Installation (Arch Linux)
+
+This repository includes a `forge` script that automatically updates your
+system, installs important packages via `pacman`, and sets up all symlinks.
+
 1.  **Clone the repository** into your home directory:
 
-        git clone https://github.com/singhc7/dotfiles.git ~/.dotfiles
-        cd ~/.dotfiles
+    ```bash
+    git clone [https://github.com/singhc7/dotfiles.git](https://github.com/singhc7/dotfiles.git) ~/dotfiles
+    cd ~/dotfiles
+    ```
+
+2.  **Execute the forge script:**
+    ```bash
+    ./forge
+    ```
+
+### Manual Installation (Other Distributions)
+
+If you are not using Arch Linux, you can manually install the configurations:
+
+1.  **Clone the repository:**
+
+    ```bash
+    git clone [https://github.com/singhc7/dotfiles.git](https://github.com/singhc7/dotfiles.git) ~/dotfiles
+    cd ~/dotfiles
+    ```
 
 2.  **Deploy configurations** using Stow. Run this command for each piece of
     software you want to configure:
-
-        stow zsh
-        stow alacritty
+    ```bash
+    stow zsh
+    stow kitty
+    ```
 
 _Note: Stow will automatically create symlinks from the folders in this
 repository to their appropriate locations in your home directory._
