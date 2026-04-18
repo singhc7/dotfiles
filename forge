@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# This script assumes you are using Arch Linux, installed GNU stow and have already done "git clone https://github.com/singhc7/dotfiles ~/dotfiles/"
+PACKAGES=('aria2' 'btop' 'eza' 'fzf' 'kitty' 'mpv' 'nnn' 'neovim' 'tealdeer' 'yt-dlp' 'zoxide' 'zsh')
+
+# Starts a system upgrade and then install all the non-existing packages using pacman.
+if command -V pacman &>/dev/null; then
+	echo "Starting system upgrade and package install..."
+	if ! sudo pacman -Syu --needed "${PACKAGES[@]}"; then
+		echo "Error: pacman transaction failed. Exiting..."
+		exit 1
+	fi
+	echo "All packages installed successfully."
+else
+	echo "Warning: pacman not found. Aborting installation."
+	exit 1
+fi
+
+# Setup symlinks to dotfiles using GNU stow.
+echo "Setting up dotfiles..."
+cd ~/dotfiles/ || {
+	echo "Directory ~/dotfiles/ not found! Exiting."
+	exit 1
+}
+for package in "${PACKAGES[@]}"; do
+	stow -R "$package"
+done
+echo "Setup complete!"
