@@ -22,7 +22,5 @@ cd ~/dotfiles/ || {
 	echo "Directory ~/dotfiles/ not found! Exiting."
 	exit 1
 }
-for package in "${PACKAGES[@]}"; do
-	stow -R "$package"
-done
+stow -R "${PACKAGES[@]}"
 echo "Setup complete!"
