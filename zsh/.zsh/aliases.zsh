@@ -16,11 +16,33 @@ if command -v eza >/dev/null 2>&1; then
     alias l.='eza -d .* --icons --group-directories-first'
 fi
 
-# --- Package Management (dnf) ---
-alias upsystem='command -v dnf >/dev/null 2>&1 && sudo dnf upgrade'
+# --- Package Management (pacman) ---
+# Update system and user packages with proper guard rails
+# pacman
+#  -S : Sync operations (interact with remote repository databases)
+#  -y : Refresh (download fresh copies of the master package databases from servers)
+#  -u : Sysupgrade (compare local packages to the fresh databases and upgrade them)
+alias upsystem='command -v pacman >/dev/null 2>&1 && sudo pacman -Syu'
 
 # Clean up system caches and unused packages
-alias clsystem='command -v dnf >/dev/null 2>&1 && sudo dnf autoremove && sudo dnf clean all'
+# pacman -Qdtq
+#  -Q : Query the local package database
+#  -d : Filter for packages installed as dependencies
+#  -t : Filter for unrequired packages (true orphans)
+#  -q : Quiet output (raw package names only, stripped of versions/descriptions)
+
+#   | : Pipe the raw list of names to the next command
+
+# pacman -Rns -
+#  -R : Remove packages
+#  -n : Nosave (completely delete config files instead of making .pacsave backups)
+#  -s : Recursive (remove the target package's unused dependencies as well)
+#   - : Read the target package names from standard input (the pipe)
+
+# pacman -Sc
+#  -S : Sync operations (cache management is categorized under sync commands)
+#  -c : Clean (a single 'c' removes cached packages that are no longer installed)
+alias clsystem='command -v pacman >/dev/null 2>&1 && pacman -Qdtq | sudo pacman -Rns - && sudo pacman -Sc'
 
 # --- Rclone Power Tools ---
 if command -v rclone >/dev/null 2>&1; then

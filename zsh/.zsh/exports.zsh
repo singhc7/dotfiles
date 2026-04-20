@@ -14,6 +14,9 @@ export VISUAL='nvim'
 # User local bin
 export PATH="$HOME/.local/bin:$PATH"
 
+# --- npm global packages ---
+export PATH="$HOME/.npm-global/bin:$PATH"
+
 # --- NNN Configuration ---
 # Plugins:
 # o: fzopen (fuzzy search)
