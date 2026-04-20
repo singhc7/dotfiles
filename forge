@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
 # This script assumes you are using Arch Linux, installed GNU stow and have already done "git clone https://github.com/singhc7/dotfiles ~/dotfiles/"
-PACKAGES=('aria2' 'btop' 'eza' 'fzf' 'kitty' 'mpv' 'nnn' 'neovim' 'tealdeer' 'yt-dlp' 'zoxide' 'zsh')
+PACKAGESTOINSTALL=('aria2' 'borg' 'btop' 'eza' 'firefox' 'fzf' 'jdk-openjdk' 'keepassxc' 'kitty' 'mpv' 'neovim' 'nnn' 'rustup' 'syncthing' 'tealdeer' 'thunderbird' 'yt-dlp' 'zoxide' 'zsh')
+PACKAGESTOSTOW=('aria2' 'btop' 'eza' 'fzf' 'kitty' 'mpv' 'nnn' 'neovim' 'tealdeer' 'yt-dlp' 'zsh')
 
 # Starts a system upgrade and then install all the non-existing packages using pacman.
 if command -V pacman &>/dev/null; then
 	echo "Starting system upgrade and package install..."
-	if ! sudo pacman -Syu --needed "${PACKAGES[@]}"; then
+	if ! sudo pacman -Syu --needed "${PACKAGESTOINSTALL[@]}"; then
 		echo "Error: pacman transaction failed. Exiting..."
 		exit 1
 	fi
@@ -22,5 +23,5 @@ cd ~/dotfiles/ || {
 	echo "Directory ~/dotfiles/ not found! Exiting."
 	exit 1
 }
-stow -R "${PACKAGES[@]}"
+stow -R "${PACKAGESTOSTOW[@]}"
 echo "Setup complete!"
