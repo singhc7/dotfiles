@@ -1,0 +1,30 @@
+# Wofi — Spotlight-style app launcher.
+# Launched by Hyprland bind `SUPER + SPACE` (see hypr/keybinds.conf).
+
+show=drun
+prompt=Search
+
+# Geometry — fixed box centered horizontally, upper third vertically.
+width=620
+height=420
+location=top
+yoffset=180
+
+# Result list.
+lines=8
+hide_scroll=true
+
+# Behaviour — instant filtering, fuzzy + case-insensitive, no action menu noise.
+filter_rate=1
+insensitive=true
+matching=fuzzy
+no_actions=true
+allow_markup=true
+allow_images=true
+image_size=28
+parse_search=true
+
+# Environment.
+term=kitty
+layer=overlay
+gtk_dark=true
