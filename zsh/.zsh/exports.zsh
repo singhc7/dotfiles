@@ -14,6 +14,9 @@ export VISUAL='nvim'
 # User local bin
 export PATH="$HOME/.local/bin:$PATH"
 
+# --- Custom scritps path ---
+export PATH="$HOME/.local/bin/scripts:$PATH"
+
 # --- npm global packages ---
 export PATH="$HOME/.npm-global/bin:$PATH"
 
