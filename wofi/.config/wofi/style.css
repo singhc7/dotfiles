@@ -1,0 +1,91 @@
+/* Wofi — Spotlight-style launcher. Matches the waybar palette. */
+
+/* Kill every GTK animation/transition so the popup feels instant. */
+* {
+  font-family: "IBM Plex Sans", "Symbols Nerd Font", sans-serif;
+  font-size: 14px;
+  animation: none;
+  transition: none;
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+window {
+  background: rgba(20, 21, 26, 0.96);
+  border: 1px solid rgba(122, 162, 247, 0.30);
+  border-radius: 14px;
+  color: #c0caf5;
+  margin: 0;
+  padding: 0;
+}
+
+#outer-box {
+  background: transparent;
+  padding: 10px;
+}
+
+#input {
+  margin: 0 0 8px 0;
+  padding: 12px 16px;
+  background: rgba(30, 31, 40, 0.85);
+  color: #c0caf5;
+  caret-color: #7aa2f7;
+  border: 1px solid rgba(122, 162, 247, 0.18);
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+#input:focus {
+  border-color: rgba(122, 162, 247, 0.55);
+  background: rgba(30, 31, 40, 0.95);
+}
+
+#input image {
+  color: #565f89;
+  margin-right: 10px;
+}
+
+#inner-box,
+#scroll {
+  background: transparent;
+  margin: 0;
+  padding: 0;
+}
+
+#entry {
+  padding: 8px 10px;
+  margin: 2px 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #c0caf5;
+}
+
+#entry image {
+  margin-right: 10px;
+  -gtk-icon-shadow: none;
+}
+
+#entry:selected,
+#entry:hover {
+  background: rgba(122, 162, 247, 0.16);
+  color: #ffffff;
+}
+
+#entry:selected #text,
+#entry:hover #text {
+  color: #ffffff;
+}
+
+#entry #text {
+  color: #c0caf5;
+}
+
+#entry.activatable:selected {
+  background: rgba(122, 162, 247, 0.22);
+}
+
+#unselected {
+  color: #c0caf5;
+}
