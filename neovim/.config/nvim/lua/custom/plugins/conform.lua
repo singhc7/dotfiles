@@ -28,24 +28,18 @@ return {
 					}
 				end
 			end,
-			formatters = {
-				prettier = {
-					prepend_args = { "--prose-wrap", "always" },
-				},
-			},
 			formatters_by_ft = {
 				lua = { "stylua" },
-				markdown = { "prettier" },
-				toml = { "taplo" },
 				python = { "ruff_format" },
-				sh = { "shfmt", "shellcheck" },
-				bash = { "shfmt", "shellcheck" },
-				zsh = { "shfmt", "shellcheck" },
+				sh = { "shfmt" },
+				bash = { "shfmt" },
 				c = { "clang-format" },
 				cpp = { "clang-format" },
-				css = { "prettier" },
 				java = { "google-java-format" },
-				json = { "clang-format" },
+				zsh = { "shfmt", "shellcheck" },
+				json = { "jq" },
+				yaml = { "prettier" },
+				markdown = { "prettier" },
 			},
 		},
 	},

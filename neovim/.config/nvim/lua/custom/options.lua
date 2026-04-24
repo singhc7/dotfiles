@@ -58,7 +58,10 @@ vim.o.inccommand = "split"
 vim.o.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.o.scrolloff = 2
+vim.o.scrolloff = 8
+
+-- Smooth scrolling (Neovim 0.10+)
+vim.o.smoothscroll = true
 
 -- never show me line breaks if they're not there
 vim.opt.wrap = false
