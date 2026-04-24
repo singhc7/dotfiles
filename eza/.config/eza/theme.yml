@@ -1,86 +1,84 @@
-# eza theme configuration
-# This file defines the colors and styles for eza.
+# eza theme — Adwaita darker
+# Palette mirrors kitty/current-theme.conf so listings match the terminal.
 
 filekinds:
-  directory: { foreground: Blue, is_bold: true }
-  symlink: { foreground: Cyan }
-  executable: { foreground: Green, is_bold: true }
-  pipe: { foreground: Yellow }
-  socket: { foreground: Red }
-  block_device: { foreground: Magenta }
-  char_device: { foreground: Magenta }
+  directory: { foreground: "#62a0ea", is_bold: true }
+  symlink: { foreground: "#93ddc2" }
+  executable: { foreground: "#57e389", is_bold: true }
+  pipe: { foreground: "#ff7800" }
+  socket: { foreground: "#ed333b" }
+  block_device: { foreground: "#9141ac" }
+  char_device: { foreground: "#9141ac" }
 
 perms:
-  user_read: { foreground: Yellow }
-  user_write: { foreground: Red, is_bold: true }
-  user_execute: { foreground: Green, is_bold: true }
-  group_read: { foreground: Yellow }
-  group_write: { foreground: Red }
-  group_execute: { foreground: Green }
-  other_read: { foreground: Yellow }
-  other_write: { foreground: Red }
-  other_execute: { foreground: Green }
-  special_user_file: { foreground: Magenta }
-  special_other_file: { foreground: Magenta }
-  attribute_set: { foreground: Cyan }
+  user_read: { foreground: "#ff7800" }
+  user_write: { foreground: "#ed333b", is_bold: true }
+  user_execute: { foreground: "#57e389", is_bold: true }
+  group_read: { foreground: "#ffa348" }
+  group_write: { foreground: "#f66151" }
+  group_execute: { foreground: "#8ff0a4" }
+  other_read: { foreground: "#ffa348" }
+  other_write: { foreground: "#f66151" }
+  other_execute: { foreground: "#8ff0a4" }
+  special_user_file: { foreground: "#dc8add" }
+  special_other_file: { foreground: "#dc8add" }
+  attribute_set: { foreground: "#5bc8af" }
 
 size:
-  number: { foreground: White }
-  unit: { foreground: 243 }
+  number: { foreground: "#deddda" }
+  unit: { foreground: "#9a9996" }
 
 date:
-  foreground: 247
+  foreground: "#b0afac"
 
 git:
-  new: { foreground: Green }
-  modified: { foreground: Yellow }
-  deleted: { foreground: Red }
-  renamed: { foreground: Cyan }
-  typechange: { foreground: Magenta }
-  ignored: { foreground: 242 }
-  conflicted: { foreground: Red, is_bold: true }
+  new: { foreground: "#57e389" }
+  modified: { foreground: "#ff7800" }
+  deleted: { foreground: "#ed333b" }
+  renamed: { foreground: "#5bc8af" }
+  typechange: { foreground: "#9141ac" }
+  ignored: { foreground: "#9a9996" }
+  conflicted: { foreground: "#ed333b", is_bold: true }
 
-# Extensions for common file types
 filenames:
-  # Config files
-  .gitignore: { foreground: 245 }
-  .gitconfig: { foreground: 245 }
-  .zshrc: { foreground: Blue }
-  .bashrc: { foreground: Blue }
-  package.json: { foreground: Yellow }
-  Cargo.toml: { foreground: Yellow }
-  go.mod: { foreground: Yellow }
+  .gitignore: { foreground: "#9a9996" }
+  .gitconfig: { foreground: "#9a9996" }
+  .zshrc: { foreground: "#62a0ea" }
+  .bashrc: { foreground: "#62a0ea" }
+  package.json: { foreground: "#ff7800" }
+  Cargo.toml: { foreground: "#ff7800" }
+  go.mod: { foreground: "#ff7800" }
 
 extensions:
   # Archives
-  zip: { foreground: Red }
-  tar: { foreground: Red }
-  gz: { foreground: Red }
-  7z: { foreground: Red }
-  rar: { foreground: Red }
+  zip: { foreground: "#ed333b" }
+  tar: { foreground: "#ed333b" }
+  gz: { foreground: "#ed333b" }
+  7z: { foreground: "#ed333b" }
+  rar: { foreground: "#ed333b" }
 
   # Documents
-  md: { foreground: Blue }
-  pdf: { foreground: Red }
-  txt: { foreground: 248 }
+  md: { foreground: "#62a0ea" }
+  pdf: { foreground: "#ed333b" }
+  txt: { foreground: "#b0afac" }
 
   # Images
-  jpg: { foreground: Cyan }
-  jpeg: { foreground: Cyan }
-  png: { foreground: Cyan }
-  svg: { foreground: Cyan }
-  gif: { foreground: Cyan }
+  jpg: { foreground: "#5bc8af" }
+  jpeg: { foreground: "#5bc8af" }
+  png: { foreground: "#5bc8af" }
+  svg: { foreground: "#5bc8af" }
+  gif: { foreground: "#5bc8af" }
 
   # Programming
-  py: { foreground: Yellow }
-  js: { foreground: Yellow }
-  ts: { foreground: Blue }
-  rs: { foreground: Red }
-  go: { foreground: Cyan }
-  lua: { foreground: Blue }
-  sh: { foreground: Green }
-  zsh: { foreground: Green }
-  c: { foreground: Cyan }
-  cpp: { foreground: Cyan }
-  h: { foreground: Cyan }
-  hpp: { foreground: Cyan }
+  py: { foreground: "#ff7800" }
+  js: { foreground: "#ffa348" }
+  ts: { foreground: "#62a0ea" }
+  rs: { foreground: "#ed333b" }
+  go: { foreground: "#5bc8af" }
+  lua: { foreground: "#62a0ea" }
+  sh: { foreground: "#57e389" }
+  zsh: { foreground: "#57e389" }
+  c: { foreground: "#5bc8af" }
+  cpp: { foreground: "#5bc8af" }
+  h: { foreground: "#93ddc2" }
+  hpp: { foreground: "#93ddc2" }

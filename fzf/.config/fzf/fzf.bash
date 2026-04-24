@@ -2,11 +2,13 @@
 # ==========================================
 # 1. Environment Variables
 # ==========================================
-# UI Styling (Gruvbox Dark colors)
+# UI Styling (Adwaita darker)
 export FZF_DEFAULT_OPTS=" \
---color=bg+:#3c3836,bg:#1d2021,spinner:#8ec07c,hl:#fb4934 \
---color=fg:#ebdbb2,header:#fb4934,info:#fabd2f,pointer:#8ec07c \
---color=marker:#8ec07c,fg+:#ebdbb2,prompt:#fabd2f,hl+:#fb4934 \
+--color=fg:#deddda,bg:#000000,hl:#ff7800 \
+--color=fg+:#f6f5f4,bg+:#1c1c1c,hl+:#ffa348 \
+--color=info:#9a9996,prompt:#62a0ea,pointer:#62a0ea \
+--color=marker:#57e389,spinner:#62a0ea,header:#9a9996 \
+--color=border:#282828,gutter:#000000 \
 --multi --height 40% --layout=reverse --border --prompt='λ ' --pointer='▶' --marker='✓'"
 
 # Use fd instead of find (if available) for better performance and respecting .gitignore

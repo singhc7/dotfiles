@@ -2,12 +2,13 @@
 # ==========================================
 # 1. Environment Variables
 # ==========================================
-# UI Styling (Tokyo Night colors)
+# UI Styling (Adwaita darker)
 export FZF_DEFAULT_OPTS=" \
---color=fg:#c0caf5,bg:#16161e,hl:#ff757f \
---color=fg+:#c0caf5,bg+:#283457,hl+:#89ddff \
---color=info:#82aaff,prompt:#89ddff,pointer:#89ddff \
---color=marker:#c3e88d,spinner:#c3e88d,header:#c3e88d \
+--color=fg:#deddda,bg:#000000,hl:#ff7800 \
+--color=fg+:#f6f5f4,bg+:#1c1c1c,hl+:#ffa348 \
+--color=info:#9a9996,prompt:#62a0ea,pointer:#62a0ea \
+--color=marker:#57e389,spinner:#62a0ea,header:#9a9996 \
+--color=border:#282828,gutter:#000000 \
 --multi --height 40% --layout=reverse --border --prompt='λ ' --pointer='▶' --marker='✓'"
 
 # Use fd instead of find (if available) for better performance and respecting .gitignore

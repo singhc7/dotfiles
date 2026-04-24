@@ -6,9 +6,11 @@ use_pager = false
 auto_update = true
 auto_update_interval_hours = 168
 
+# Colors resolve to the terminal's ANSI palette, which kitty sets to
+# Adwaita darker — so the rendering matches the rest of the theme.
 [style]
 description = { foreground = "white" }
-command_name = { foreground = "cyan", bold = true }
-example_text = { foreground = "green" }
+command_name = { foreground = "blue", bold = true }
+example_text = { foreground = "white" }
 example_code = { foreground = "cyan" }
 example_variable = { foreground = "yellow", italic = true }
