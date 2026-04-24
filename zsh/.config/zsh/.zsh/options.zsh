@@ -13,6 +13,12 @@ bindkey '^S' history-incremental-search-forward
 bindkey '^P' up-line-or-history
 bindkey '^N' down-line-or-history
 
+# History substring search (filter history by what's already typed)
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
 # Standard emacs-style bindings in insert mode for convenience
 bindkey '^A' beginning-of-line
 bindkey '^E' end-of-line
@@ -57,18 +63,20 @@ preexec() {
 }
 
 # --- History ---
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=100000
+SAVEHIST=100000
 HISTFILE=~/.zsh_history
 setopt appendhistory
 setopt sharehistory
 setopt hist_ignore_all_dups
 setopt hist_save_no_dups
+setopt hist_find_no_dups
+setopt hist_reduce_blanks
 setopt hist_ignore_space
 
 # --- General ---
 setopt autocd              # If a command is a directory, cd into it
 setopt interactivecomments # Allow comments in interactive shells
 # setopt magicequalsubst  # Completion for path-like arguments
-# setopt notify           # Notify of background job completion immediately
+setopt notify # Notify of background job completion immediately
 # setopt prompt_subst     # Allow parameter expansion in prompt

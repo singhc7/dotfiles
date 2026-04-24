@@ -5,17 +5,13 @@
 # --- fzf ---
 [[ -f ~/.config/fzf/fzf.zsh ]] && source ~/.config/fzf/fzf.zsh
 
-# --- Deno ---
-if [ -f "$HOME/.deno/env" ]; then
-    . "$HOME/.deno/env"
-fi
-
 # --- zoxide ---
-# Initialize zoxide (defines z and zi)
 if command -v zoxide >/dev/null 2>&1; then
     eval "$(zoxide init zsh)"
-    # Also alias cd to z to allow both commands to work
-    alias cd="z"
-    # Optimization: Limit the frequency of database cleanup
     export _ZO_MAXAGE=10000
+fi
+
+# --- direnv ---
+if command -v direnv >/dev/null 2>&1; then
+    eval "$(direnv hook zsh)"
 fi

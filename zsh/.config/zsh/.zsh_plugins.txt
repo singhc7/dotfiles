@@ -1,10 +1,8 @@
-# The Plugin Manager
-mattmc3/antidote
-
 # The Theme (The "Pro" Look)
 romkatv/powerlevel10k
 
 # The Efficiency Tools (Fish-like features)
+zsh-users/zsh-completions
 zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-autosuggestions
-ohmyzsh/ohmyzsh path:plugins/fzf
+zsh-users/zsh-history-substring-search

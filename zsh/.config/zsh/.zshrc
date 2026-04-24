@@ -3,30 +3,20 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${USER}.zsh" ]]; t
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${USER}.zsh"
 fi
 
-# ==========================================
-# Antidote Bootstrap & Load
-# ==========================================
-# If Antidote isn't installed, clone it automatically
-if [[ ! -d ~/.antidote ]]; then
-    echo "Installing Antidote..."
-    git clone --depth=1 https://github.com/mattmc3/antidote.git ~/.antidote
-fi
-
 # 2. Load Antidote (Your Plugin Manager)
-# shellcheck disable=SC2086
-source ${ZDOTDIR:-~}/.antidote/antidote.zsh
+source ~/.antidote/antidote.zsh
 
 # 3. Load your plugins (Includes Powerlevel10k, Autosuggestions, etc.)
 antidote load
 
 # 4. Load Powerlevel10k Visual Settings
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f ${ZDOTDIR:-~}/.p10k.zsh ]] || source ${ZDOTDIR:-~}/.p10k.zsh
 
 # ==========================================
 # Modular Configurations
 # ==========================================
 # Use ~/.zsh if it exists (standard Stow behavior)
-ZSH_CONFIG_DIR="$HOME/.zsh"
+ZSH_CONFIG_DIR="$ZDOTDIR/.zsh"
 
 # If ~/.zsh doesn't exist, fall back to the relative path of this script
 if [[ ! -d "$ZSH_CONFIG_DIR" ]]; then

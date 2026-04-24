@@ -45,3 +45,9 @@ export RCLONE_BUFFER_SIZE=64M       # Larger memory buffer for smoother streamin
 export RCLONE_DRIVE_USE_TRASH=true  # GDrive specific: safety first
 export RCLONE_FAST_LIST=true        # Drastically reduces API calls for syncs
 export RCLONE_VFS_CACHE_MODE=writes # Enables basic file caching for mounts
+
+# --- Man Pager (syntax-highlighted via bat) ---
+if command -v bat >/dev/null 2>&1; then
+	export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+	export MANROFFOPT="-c"
+fi
