@@ -76,85 +76,92 @@ return {
         capabilities = require('blink.cmp').get_lsp_capabilities(),
       })
 
+      -- Active LSP servers, scoped to the languages I currently work in:
+      -- python, shell, markdown, html, toml, css.
+      -- Servers I previously had enabled are kept below in commented blocks
+      -- so they can be re-enabled by just uncommenting (and adding the name
+      -- back to the `servers` table). See "Disabled servers" further down.
       local servers = {
-        lua_ls = {
-          on_init = function(client)
-            if client.workspace_folders then
-              local path = client.workspace_folders[1].name
-              if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then return end
-            end
-
-            client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
-              runtime = {
-                version = 'LuaJIT',
-                path = { 'lua/?.lua', 'lua/?/init.lua' },
-              },
-              workspace = {
-                checkThirdParty = false,
-                library = vim.tbl_extend('force', vim.api.nvim_get_runtime_file('', true), {
-                  '${3rd}/luv/library',
-                  '${3rd}/busted/library',
-                }),
-              },
-            })
-          end,
-          settings = { Lua = {} },
-        },
-        pyright = {},
-        ruff = {},
-        bashls = {},
-        yamlls = {},
-        jsonls = {},
-        marksman = {},
-        clangd = {
-          -- Allow attaching to single files by falling back to current directory
-          root_markers = { '.git', 'compile_commands.json', 'compile_flags.txt', '.' },
-        },
-        jdtls = {
-          -- Allow attaching to single files
-          root_markers = { '.git', 'pom.xml', 'build.gradle', '.' },
-          -- Fix jdtls crashes by providing a stable workspace
-          cmd = {
-            'jdtls',
-            '-data',
-            vim.fn.stdpath 'cache' .. '/jdtls-workspace/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t'),
-          },
-          settings = {
-            java = {
-              signatureHelp = { enabled = true },
-              contentProvider = { preferred = 'fernflower' },
-              completion = {
-                favoriteStaticMembers = {
-                  'org.junit.Assert.*',
-                  'org.junit.Assume.*',
-                  'org.junit.Juipter.api.Assertions.*',
-                  'org.junit.Juipter.api.Assumptions.*',
-                  'org.junit.Juipter.api.DynamicTest.*',
-                  'org.junit.Juipter.api.DynamicContainer.*',
-                  'org.mockito.Mockito.*',
-                  'org.mockito.ArgumentMatchers.*',
-                  'org.mockito.Answers.*',
-                },
-              },
-              sources = {
-                organizeImports = {
-                  starThreshold = 9999,
-                  staticStarThreshold = 9999,
-                },
-              },
-            },
-          },
-        },
+        pyright = {},   -- python
+        ruff = {},      -- python (linter/formatter LSP)
+        bashls = {},    -- shell
+        marksman = {},  -- markdown
+        html = {},      -- html
+        cssls = {},     -- css
+        taplo = {},     -- toml
       }
 
+      -- ─────────────────────────────────────────────────────────────────
+      -- Disabled servers — uncomment the entry and add it to `servers` to
+      -- re-enable. Mason will install on next `:Lazy sync`/`:Mason`.
+      -- ─────────────────────────────────────────────────────────────────
+      --
+      -- lua_ls — Lua. Useful when editing this Neovim config itself.
+      --   Re-enable if you start hacking on plugins / writing Lua again.
+      -- local lua_ls = {
+      --   on_init = function(client)
+      --     if client.workspace_folders then
+      --       local path = client.workspace_folders[1].name
+      --       if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then return end
+      --     end
+      --     client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+      --       runtime = { version = 'LuaJIT', path = { 'lua/?.lua', 'lua/?/init.lua' } },
+      --       workspace = {
+      --         checkThirdParty = false,
+      --         library = vim.tbl_extend('force', vim.api.nvim_get_runtime_file('', true), {
+      --           '${3rd}/luv/library', '${3rd}/busted/library',
+      --         }),
+      --       },
+      --     })
+      --   end,
+      --   settings = { Lua = {} },
+      -- }
+      --
+      -- yamlls = {},   -- YAML
+      -- jsonls = {},   -- JSON
+      --
+      -- clangd — C/C++.
+      -- local clangd = {
+      --   root_markers = { '.git', 'compile_commands.json', 'compile_flags.txt', '.' },
+      -- }
+      --
+      -- jdtls — Java.
+      -- local jdtls = {
+      --   root_markers = { '.git', 'pom.xml', 'build.gradle', '.' },
+      --   cmd = {
+      --     'jdtls', '-data',
+      --     vim.fn.stdpath 'cache' .. '/jdtls-workspace/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t'),
+      --   },
+      --   settings = {
+      --     java = {
+      --       signatureHelp = { enabled = true },
+      --       contentProvider = { preferred = 'fernflower' },
+      --       completion = {
+      --         favoriteStaticMembers = {
+      --           'org.junit.Assert.*', 'org.junit.Assume.*',
+      --           'org.junit.Juipter.api.Assertions.*',
+      --           'org.junit.Juipter.api.Assumptions.*',
+      --           'org.junit.Juipter.api.DynamicTest.*',
+      --           'org.junit.Juipter.api.DynamicContainer.*',
+      --           'org.mockito.Mockito.*', 'org.mockito.ArgumentMatchers.*',
+      --           'org.mockito.Answers.*',
+      --         },
+      --       },
+      --       sources = { organizeImports = { starThreshold = 9999, staticStarThreshold = 9999 } },
+      --     },
+      --   },
+      -- }
+
+      -- Mason-managed tools (formatters/linters). Trimmed to match active langs.
+      -- Disabled tools kept commented for easy restore:
+      --   'stylua'              (lua)
+      --   'google-java-format'  (java)
+      --   'clang-format'        (c/c++)
       local tools = {
-        'stylua',
-        'shellcheck',
-        'shfmt',
-        'google-java-format',
-        'clang-format',
-        'jq',
-        'prettier',
+        'shellcheck',  -- shell
+        'shfmt',       -- shell
+        'prettier',    -- html / css / markdown
+        'jq',          -- general JSON utility
       }
 
       local ensure_installed = vim.tbl_keys(servers or {})
