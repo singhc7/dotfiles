@@ -24,4 +24,11 @@ cd ~/dotfiles/ || {
 	exit 1
 }
 stow -R "${PACKAGESTOSTOW[@]}"
+
+# Install Antidote (zsh plugin manager) into ~/.antidote if missing.
+if [[ ! -d ~/.antidote ]]; then
+	echo "Installing Antidote..."
+	git clone --depth=1 https://github.com/mattmc3/antidote.git ~/.antidote
+fi
+
 echo "Setup complete!"
