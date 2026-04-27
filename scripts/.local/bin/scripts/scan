@@ -5,6 +5,9 @@
 #                Built for resilience during multi-page flatbed scans.
 # Dependencies:  sane-utils (scanimage), img2pdf, ocrmypdf
 
+set -eu
+setopt pipefail
+
 # 1. Device Initialization
 
 # Dynamically locate the first available scanner on the system.
