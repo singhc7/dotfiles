@@ -152,16 +152,17 @@ return {
       --   },
       -- }
 
-      -- Mason-managed tools (formatters/linters). Trimmed to match active langs.
-      -- Disabled tools kept commented for easy restore:
-      --   'stylua'              (lua)
-      --   'google-java-format'  (java)
-      --   'clang-format'        (c/c++)
+      -- Mason-managed tools (formatters/linters). Conform formats these even
+      -- when the matching LSP is disabled — keep them installed so format-on-save
+      -- doesn't silently no-op.
       local tools = {
-        'shellcheck',  -- shell
-        'shfmt',       -- shell
-        'prettier',    -- html / css / markdown
-        'jq',          -- general JSON utility
+        'shellcheck',          -- shell
+        'shfmt',               -- shell
+        'prettier',            -- html / css / markdown / yaml
+        'jq',                  -- json formatter
+        'stylua',              -- lua (this config itself)
+        'clang-format',        -- c / c++
+        'google-java-format',  -- java
       }
 
       local ensure_installed = vim.tbl_keys(servers or {})
