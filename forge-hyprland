@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+# Hyprland-specific bootstrap. Run *after* `./forge` on machines where you want
+# the Wayland desktop environment. Kept separate so headless / non-Hyprland
+# installs (servers, WSL, other distros) skip these packages and symlinks.
+
+# --- Compositor + lock + idle daemons ---
+HYPR_PACKAGES=(
+    'hyprland'
+    'hypridle'
+    'hyprlock'
+    'hyprcursor'
+    'xdg-desktop-portal-hyprland'
+)
+
+# --- Bar / launcher / notifications / clipboard ---
+DESKTOP_PACKAGES=(
+    'waybar'
+    'wofi'
+    'dunst'
+    'cliphist'
+    'wl-clipboard'
+    'grim'
+    'slurp'
+)
+
+# --- Hardware control + system tray ---
+SYSTEM_PACKAGES=(
+    'brightnessctl'
+    'playerctl'
+    'pipewire'
+    'wireplumber'
+    'pavucontrol'
+    'polkit-kde-agent'
+    'network-manager-applet'
+    'blueman'
+    'qt5ct'
+)
+
+# Stow targets — only the configs that belong to this layer.
+PACKAGESTOSTOW=('hyprland' 'waybar' 'wofi')
+
+if ! command -V pacman &>/dev/null; then
+    echo "Warning: pacman not found. forge-hyprland is Arch-only. Aborting."
+    exit 1
+fi
+
+ALL_PACKAGES=("${HYPR_PACKAGES[@]}" "${DESKTOP_PACKAGES[@]}" "${SYSTEM_PACKAGES[@]}")
+
+echo "Installing Hyprland desktop layer..."
+if ! sudo pacman -Syu --needed "${ALL_PACKAGES[@]}"; then
+    echo "Error: pacman transaction failed. Exiting..."
+    exit 1
+fi
+echo "All Hyprland packages installed successfully."
+
+echo "Setting up Hyprland dotfiles..."
+cd ~/dotfiles/ || {
+    echo "Directory ~/dotfiles/ not found! Exiting."
+    exit 1
+}
+stow -R "${PACKAGESTOSTOW[@]}"
+
+echo "Hyprland setup complete!"
+echo "Tip: log out and pick 'Hyprland' from your display manager (or 'Hyprland' from a TTY)."
