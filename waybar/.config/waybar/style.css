@@ -1,4 +1,5 @@
-/* Minimalist monochrome theme — subtle accents, no per-module colors. */
+/* Minimalist monochrome theme — Adwaita darker palette.
+   Mirrors hypr/colors.conf and kitty/current-theme.conf. */
 
 * {
   font-family: "IBM Plex Mono", "Symbols Nerd Font", monospace;
@@ -7,20 +8,20 @@
 }
 
 window#waybar {
-  background: rgba(20, 21, 26, 0.92);
-  color: #c0caf5;
-  border-bottom: 1px solid rgba(122, 162, 247, 0.25);
+  background: rgba(30, 30, 30, 0.92);            /* adw_bg */
+  color: #deddda;                                 /* adw_fg light */
+  border-bottom: 1px solid rgba(98, 160, 234, 0.25); /* adw_blue */
   transition: background-color 0.3s ease-in-out;
 }
 
 window#waybar.hidden { opacity: 0.0; }
 
 tooltip {
-  background: #1a1b26;
-  border: 1px solid #7aa2f7;
+  background: #242424;                            /* adw_surface */
+  border: 1px solid #62a0ea;                      /* adw_blue */
   border-radius: 6px;
 }
-tooltip label { color: #c0caf5; padding: 4px; }
+tooltip label { color: #deddda; padding: 4px; }
 
 /* Module spacing */
 #workspaces,
@@ -32,10 +33,14 @@ tooltip label { color: #c0caf5; padding: 4px; }
 #pulseaudio,
 #backlight,
 #battery,
+#cpu,
+#memory,
+#temperature,
+#idle_inhibitor,
 #clock {
   padding: 0 8px;
   margin: 2px 2px;
-  color: #c0caf5;
+  color: #deddda;
   background: transparent;
 }
 
@@ -43,7 +48,7 @@ tooltip label { color: #c0caf5; padding: 4px; }
 #workspaces button {
   padding: 0 6px;
   margin: 2px 1px;
-  color: #565f89;
+  color: #9a9996;                                 /* adw muted grey */
   background: transparent;
   border: none;
   border-radius: 4px;
@@ -51,43 +56,54 @@ tooltip label { color: #c0caf5; padding: 4px; }
   transition: color 0.15s, background 0.15s;
 }
 #workspaces button:hover {
-  background: rgba(122, 162, 247, 0.1);
-  color: #c0caf5;
+  background: rgba(98, 160, 234, 0.10);
+  color: #deddda;
   box-shadow: none;
   text-shadow: none;
 }
 #workspaces button.active {
-  color: #7aa2f7;
-  background: rgba(122, 162, 247, 0.15);
+  color: #62a0ea;                                 /* adw_blue */
+  background: rgba(98, 160, 234, 0.15);
 }
 #workspaces button.urgent {
-  color: #f7768e;
-  background: rgba(247, 118, 142, 0.15);
+  color: #e01b24;                                 /* adw_red */
+  background: rgba(224, 27, 36, 0.15);
 }
 
 /* Window title */
 #window {
-  color: #a9b1d6;
+  color: #c0bfbc;                                 /* adw muted */
   font-weight: 500;
 }
 window#waybar.empty #window { background: transparent; }
 
 /* Submap indicator */
-#submap { color: #e0af68; }
+#submap { color: #f6d32d; }                       /* adw_yellow */
 
 /* Battery states */
 #battery.charging,
-#battery.plugged { color: #9ece6a; }
-#battery.warning:not(.charging) { color: #e0af68; }
+#battery.plugged { color: #57e389; }              /* adw_green */
+#battery.warning:not(.charging) { color: #f6d32d; }
 #battery.critical:not(.charging) {
-  color: #f7768e;
+  color: #e01b24;
   animation: blink 1s steps(2, start) infinite;
 }
-@keyframes blink { to { color: #c0caf5; } }
+@keyframes blink { to { color: #deddda; } }
 
 /* Network / audio mute states */
-#network.disconnected { color: #f7768e; }
-#pulseaudio.muted     { color: #565f89; }
+#network.disconnected { color: #e01b24; }
+#pulseaudio.muted     { color: #9a9996; }
+
+/* Resource modules */
+#cpu.warning,
+#memory.warning,
+#temperature.warning { color: #f6d32d; }
+#cpu.critical,
+#memory.critical,
+#temperature.critical { color: #e01b24; }
+
+/* Idle inhibitor (caffeine) */
+#idle_inhibitor.activated { color: #ff7800; }     /* adw_orange when on */
 
 /* Tray */
 #tray { padding-right: 6px; }
@@ -95,7 +111,7 @@ window#waybar.empty #window { background: transparent; }
 
 /* Clock is the rightmost element — trim right padding */
 #clock {
-  color: #c0caf5;
+  color: #deddda;
   padding-right: 12px;
   font-weight: 500;
 }
