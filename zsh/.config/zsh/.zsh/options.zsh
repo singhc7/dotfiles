@@ -2,16 +2,35 @@
 # Shell Options & Keybindings
 # ==========================================
 
+# --- Completion ---
+# Antidote handles fpath for plugins; we still need to call compinit ourselves.
+# Cache the dump under XDG to keep $HOME clean and speed up subsequent shells.
+typeset -g _zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${ZSH_VERSION}"
+[[ -d "${_zcompdump:h}" ]] || mkdir -p "${_zcompdump:h}"
+autoload -Uz compinit
+compinit -d "$_zcompdump"
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*:descriptions' format '%F{246}-- %d --%f'
+zstyle ':completion:*' group-name ''
+
 # --- Vi Mode ---
 bindkey -v          # Enable vi mode
 export KEYTIMEOUT=1 # Reduce escape delay to 10ms
+
+# Enable beginning-of-line aware history search (better than plain up/down).
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^P' up-line-or-beginning-search
+bindkey '^N' down-line-or-beginning-search
 
 # Better searching in vi mode
 # (fzf usually handles these, but good to have fallbacks)
 bindkey '^R' history-incremental-search-backward
 bindkey '^S' history-incremental-search-forward
-bindkey '^P' up-line-or-history
-bindkey '^N' down-line-or-history
 
 # History substring search (filter history by what's already typed)
 bindkey '^[[A' history-substring-search-up
@@ -77,6 +96,8 @@ setopt hist_ignore_space
 # --- General ---
 setopt autocd              # If a command is a directory, cd into it
 setopt interactivecomments # Allow comments in interactive shells
-# setopt magicequalsubst  # Completion for path-like arguments
-setopt notify # Notify of background job completion immediately
-# setopt prompt_subst     # Allow parameter expansion in prompt
+setopt notify              # Notify of background job completion immediately
+setopt extended_glob       # Powerful globbing (^, ~, # operators)
+setopt no_clobber          # Refuse to overwrite files with `>`; use `>!` to force
+setopt long_list_jobs      # Show job number, state, and full command
+setopt pushd_ignore_dups   # Don't keep duplicate dirs in the dirstack
