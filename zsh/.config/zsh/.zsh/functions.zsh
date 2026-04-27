@@ -2,6 +2,56 @@
 # Functions
 # ==========================================
 
+# --- Pacman preflight (shared by upsystem / clsystem) ---
+# Bails out before any sudo prompt if pacman is missing or the db is locked.
+_pacman_preflight() {
+    command -v pacman >/dev/null 2>&1 || {
+        echo "pacman not found — this command is Arch-only." >&2
+        return 1
+    }
+
+    local lock=/var/lib/pacman/db.lck
+    if [[ -e "$lock" ]] && ! pgrep -x pacman >/dev/null; then
+        echo "Stale pacman lock at $lock (no pacman process running)." >&2
+        echo "Inspect it, then remove with:  sudo rm $lock" >&2
+        return 1
+    fi
+}
+
+# --- upsystem: full system upgrade ---
+#   -S sync, -y refresh dbs, -u sysupgrade.
+# If an AUR helper (paru/yay) is installed, prefer it so the AUR tree is
+# upgraded in the same pass; otherwise fall back to plain pacman.
+upsystem() {
+    _pacman_preflight || return
+
+    if command -v paru >/dev/null 2>&1; then
+        paru -Syu
+    elif command -v yay >/dev/null 2>&1; then
+        yay -Syu
+    else
+        sudo pacman -Syu
+    fi
+}
+
+# --- clsystem: prune orphans + clean package cache ---
+#   pacman -Qdtq : list packages installed as deps and no longer required.
+#   pacman -Rns  : recursive remove + scrub configs (--nosave) + sweep deps.
+#   pacman -Sc   : drop cached packages that are no longer installed.
+# Guards against the empty-orphans case (pacman -Rns errors on empty stdin).
+clsystem() {
+    _pacman_preflight || return
+
+    local orphans
+    orphans=$(pacman -Qdtq) || true
+    if [[ -n "$orphans" ]]; then
+        echo "$orphans" | sudo pacman -Rns - || return 1
+    else
+        echo "No orphan packages."
+    fi
+    sudo pacman -Sc
+}
+
 # --- NNN: CD on Quit ---
 # Allows nnn to change the shell directory on exit
 n() {
