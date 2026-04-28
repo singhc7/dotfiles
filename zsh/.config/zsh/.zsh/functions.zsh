@@ -76,6 +76,56 @@ mz() {
     mkdir -p "$1" && cd "$1" || return
 }
 
+# --- myenv: list aliases, functions, and exports in the current shell ---
+# Sister to the `path` alias, which already prints $PATH one entry per line.
+# Usage:
+#   myenv                       all sections
+#   myenv aliases   [pattern]   list aliases
+#   myenv functions [pattern]   list user functions (skips _-prefixed internals)
+#   myenv exports   [pattern]   list exported environment variables
+# Pattern is a case-insensitive substring filter applied to that section.
+myenv() {
+    local section="${1:-all}"
+    local pattern="${2:-}"
+
+    local -a filter
+    if [[ -n "$pattern" ]]; then
+        filter=(grep -i -- "$pattern")
+    else
+        filter=(cat)
+    fi
+
+    case "$section" in
+    aliases | a)
+        print -P "%F{cyan}── Aliases ──%f"
+        alias | "${filter[@]}"
+        ;;
+    functions | f | funcs)
+        print -P "%F{cyan}── Functions ──%f"
+        print -l ${(ok)functions} | grep -v '^_' | "${filter[@]}"
+        ;;
+    exports | e | env)
+        print -P "%F{cyan}── Exports ──%f"
+        env | sort | "${filter[@]}"
+        ;;
+    all)
+        myenv aliases "$pattern"
+        print
+        myenv functions "$pattern"
+        print
+        myenv exports "$pattern"
+        ;;
+    -h | --help | help)
+        print "usage: myenv [aliases|functions|exports|all] [pattern]"
+        ;;
+    *)
+        print -u2 "myenv: unknown section '$section'"
+        print -u2 "usage: myenv [aliases|functions|exports|all] [pattern]"
+        return 1
+        ;;
+    esac
+}
+
 # --- Universal archive extractor ---
 extract() {
     if [[ ! -f "$1" ]]; then
