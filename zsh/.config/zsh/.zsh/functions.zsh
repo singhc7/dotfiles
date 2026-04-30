@@ -20,15 +20,13 @@ _pacman_preflight() {
 
 # --- upsystem: full system upgrade ---
 #   -S sync, -y refresh dbs, -u sysupgrade.
-# If an AUR helper (paru/yay) is installed, prefer it so the AUR tree is
+# If an AUR helper (paru) is installed, prefer it so the AUR tree is
 # upgraded in the same pass; otherwise fall back to plain pacman.
 upsystem() {
     _pacman_preflight || return
 
     if command -v paru >/dev/null 2>&1; then
         paru -Syu
-    elif command -v yay >/dev/null 2>&1; then
-        yay -Syu
     else
         sudo pacman -Syu
     fi
@@ -102,6 +100,7 @@ myenv() {
         ;;
     functions | f | funcs)
         print -P "%F{cyan}── Functions ──%f"
+        # shellcheck disable=SC2086,SC1083
         print -l ${(ok)functions} | grep -v '^_' | "${filter[@]}"
         ;;
     exports | e | env)
