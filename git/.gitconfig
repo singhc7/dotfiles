@@ -1,6 +1,6 @@
 [user]
-	name = Chahat
-	email = chahat@disroot.org
+	name = Chahatpreet Singh
+	email = c@chahat.dev
 	signingkey = ~/.ssh/id_ed25519.pub
 [gpg]
 	format = ssh
