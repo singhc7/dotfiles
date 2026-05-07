@@ -10,8 +10,6 @@
 window#waybar {
   background: rgba(30, 30, 30, 0.92);            /* adw_bg */
   color: #deddda;                                 /* adw_fg light */
-  border-bottom: 1px solid rgba(98, 160, 234, 0.25); /* adw_blue */
-  transition: background-color 0.3s ease-in-out;
 }
 
 window#waybar.hidden { opacity: 0.0; }
