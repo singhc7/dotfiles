@@ -2,10 +2,6 @@
 # Environment Variables & Exports
 # ==========================================
 
-# --- SSH Agent (Manual Background Service) ---
-# Point SSH_AUTH_SOCK to the socket managed by the background ssh-agent.
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-
 # --- Editor ---
 export EDITOR='nvim'
 export VISUAL='nvim'
