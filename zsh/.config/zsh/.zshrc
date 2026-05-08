@@ -4,13 +4,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${USER}.zsh" ]]; t
 fi
 
 # 2. Load Antidote (Your Plugin Manager)
-source ~/.antidote/antidote.zsh
+source /run/current-system/sw/share/antidote/antidote.zsh
 
 # 3. Load your plugins (Includes Powerlevel10k, Autosuggestions, etc.)
 antidote load
 
 # 4. Load Powerlevel10k Visual Settings
-[[ ! -f ${ZDOTDIR:-~}/.p10k.zsh ]] || source ${ZDOTDIR:-~}/.p10k.zsh
+[[ ! -f ${ZDOTDIR:-~}/.p10k.zsh ]] || source "${ZDOTDIR:-~}"/.p10k.zsh
 
 # ==========================================
 # Modular Configurations
