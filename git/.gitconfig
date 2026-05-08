@@ -36,6 +36,7 @@
 	conflictstyle = zdiff3
 [core]
 	editor = nvim
+	pager = delta
 [alias]
 	st = status -sb
 	co = checkout
