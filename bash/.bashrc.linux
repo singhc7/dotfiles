@@ -34,7 +34,8 @@ n() {
 }
 
 # --- Aliases ---
-# 1. To update all the packages
-alias update-all='sudo dnf upgrade && flatpak update && snap refresh && pipx upgrade-all'
-# 2. To clean and remove old dependencies
-alias clean-system='sudo dnf autoremove && flatpak uninstall --unused && pipx interpreter prune'
+# NixOS package management. flatpak/pipx lines guarded so they no-op if absent.
+# 1. Rebuild the system with newer flake inputs.
+alias update-all='sudo nixos-rebuild switch --upgrade && { command -v flatpak >/dev/null && flatpak update; }; { command -v pipx >/dev/null && pipx upgrade-all; }'
+# 2. Garbage-collect old generations and hardlink-dedupe the store.
+alias clean-system='sudo nix-collect-garbage -d && sudo nix store optimise && { command -v flatpak >/dev/null && flatpak uninstall --unused; }'

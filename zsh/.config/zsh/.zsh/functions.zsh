@@ -2,14 +2,26 @@
 # Functions
 # ==========================================
 
-# --- Pacman preflight (shared by upsystem / clsystem) ---
-# Bails out before any sudo prompt if pacman is missing or the db is locked.
-_pacman_preflight() {
-    command -v pacman >/dev/null 2>&1 || {
-        echo "pacman not found — this command is Arch-only." >&2
-        return 1
-    }
+# --- Detect host package manager ---
+# Returns one of: nixos | pacman | "" (unknown). Cached per shell.
+_pkg_host() {
+    if [[ -n "$_PKG_HOST_CACHE" ]]; then
+        print -r -- "$_PKG_HOST_CACHE"
+        return
+    fi
+    if [[ -f /etc/NIXOS ]] || command -v nixos-rebuild >/dev/null 2>&1; then
+        _PKG_HOST_CACHE=nixos
+    elif command -v pacman >/dev/null 2>&1; then
+        _PKG_HOST_CACHE=pacman
+    else
+        _PKG_HOST_CACHE=
+    fi
+    print -r -- "$_PKG_HOST_CACHE"
+}
 
+# --- Pacman preflight (Arch only) ---
+# Bails out before any sudo prompt if the pacman db is locked.
+_pacman_preflight() {
     local lock=/var/lib/pacman/db.lck
     if [[ -e "$lock" ]] && ! pgrep -x pacman >/dev/null; then
         echo "Stale pacman lock at $lock (no pacman process running)." >&2
@@ -19,35 +31,53 @@ _pacman_preflight() {
 }
 
 # --- upsystem: full system upgrade ---
-#   -S sync, -y refresh dbs, -u sysupgrade.
-# If an AUR helper (paru) is installed, prefer it so the AUR tree is
-# upgraded in the same pass; otherwise fall back to plain pacman.
+# NixOS: rebuild the system from the flake/config and pull newer inputs.
+# Arch:  pacman -Syu (or paru if an AUR helper is present).
 upsystem() {
-    _pacman_preflight || return
-
-    if command -v paru >/dev/null 2>&1; then
-        paru -Syu
-    else
-        sudo pacman -Syu
-    fi
+    case "$(_pkg_host)" in
+    nixos)
+        sudo nixos-rebuild switch --upgrade
+        ;;
+    pacman)
+        _pacman_preflight || return
+        if command -v paru >/dev/null 2>&1; then
+            paru -Syu
+        else
+            sudo pacman -Syu
+        fi
+        ;;
+    *)
+        echo "upsystem: no supported package manager (NixOS or pacman) found." >&2
+        return 1
+        ;;
+    esac
 }
 
-# --- clsystem: prune orphans + clean package cache ---
-#   pacman -Qdtq : list packages installed as deps and no longer required.
-#   pacman -Rns  : recursive remove + scrub configs (--nosave) + sweep deps.
-#   pacman -Sc   : drop cached packages that are no longer installed.
-# Guards against the empty-orphans case (pacman -Rns errors on empty stdin).
+# --- clsystem: drop stale state from the package manager ---
+# NixOS: garbage-collect old generations and hardlink-dedupe the store.
+# Arch:  remove orphan packages and drop the uninstalled package cache.
 clsystem() {
-    _pacman_preflight || return
-
-    local orphans
-    orphans=$(pacman -Qdtq) || true
-    if [[ -n "$orphans" ]]; then
-        echo "$orphans" | sudo pacman -Rns - || return 1
-    else
-        echo "No orphan packages."
-    fi
-    sudo pacman -Sc
+    case "$(_pkg_host)" in
+    nixos)
+        sudo nix-collect-garbage -d || return 1
+        sudo nix store optimise
+        ;;
+    pacman)
+        _pacman_preflight || return
+        local orphans
+        orphans=$(pacman -Qdtq) || true
+        if [[ -n "$orphans" ]]; then
+            echo "$orphans" | sudo pacman -Rns - || return 1
+        else
+            echo "No orphan packages."
+        fi
+        sudo pacman -Sc
+        ;;
+    *)
+        echo "clsystem: no supported package manager (NixOS or pacman) found." >&2
+        return 1
+        ;;
+    esac
 }
 
 # --- NNN: CD on Quit ---
