@@ -19,10 +19,9 @@ Before deploying, ensure the following are installed on your system:
 
 ## Installation
 
-### Automated Installation (Arch Linux)
-
-This repository includes a `forge` script that automatically updates your
-system, installs important packages via `pacman`, and sets up all symlinks.
+The `forge` script handles symlinking on any distro. On Arch it also drives a
+`pacman` install of the package list; on NixOS it skips that step (packages
+belong in your flake / `configuration.nix`) and just runs `stow` + Antidote.
 
 1.  **Clone the repository** into your home directory:
 
@@ -36,26 +35,24 @@ system, installs important packages via `pacman`, and sets up all symlinks.
     ./forge
     ```
 
-### Manual Installation (Other Distributions)
+### NixOS notes
 
-If you are not using Arch Linux, you can manually install the configurations:
+- Declare packages (`git`, `stow`, `zsh`, `kitty`, `neovim`, `eza`, `fzf`,
+  `zoxide`, `tealdeer`, …) in your system flake or `configuration.nix`.
+- If Antidote is provided by the system (e.g. `programs.zsh.antidote` or the
+  `antidote` package), `forge` will detect it at
+  `/run/current-system/sw/share/antidote` and skip the user-level clone.
 
-1.  **Clone the repository:**
+### Manual Installation
 
-    ```bash
-    git clone https://github.com/singhc7/dotfiles ~/dotfiles
-    cd ~/dotfiles
-    ```
+If you'd rather not run `forge`, deploy individual configs with stow:
 
-2.  **Deploy configurations** using Stow. Run this command for each piece of
-    software you want to configure:
-    ```bash
-    stow zsh
-    stow kitty
-    ```
+```bash
+stow zsh
+stow kitty
+```
 
-_Note: Stow will automatically create symlinks from the folders in this
-repository to their appropriate locations in your home directory._
+_Stow creates symlinks from this repo into your home directory._
 
 ## License and Usage
 
