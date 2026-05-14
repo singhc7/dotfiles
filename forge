@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
 
-# This script assumes you are using Arch Linux, installed GNU stow and have already done "git clone https://github.com/singhc7/dotfiles ~/dotfiles/"
+# Cross-distro bootstrap: stow user-level dotfiles + install Antidote.
+# Optionally drives a system package install on Arch (pacman). On NixOS,
+# packages are declared in the system flake/configuration.nix, so the
+# package step is a no-op here.
+
 PACKAGESTOINSTALL=('aria2' 'bat' 'borg' 'btop' 'eza' 'fd' 'firefox' 'fzf' 'jdk-openjdk' 'keepassxc' 'kitty' 'mpv' 'neovim' 'ripgrep' 'rustup' 'syncthing' 'tealdeer' 'thunderbird' 'yt-dlp' 'zoxide' 'zsh')
 PACKAGESTOSTOW=('aria2' 'btop' 'eza' 'fzf' 'git' 'kitty' 'mpv' 'nnn' 'neovim' 'scripts' 'tealdeer' 'yt-dlp' 'zsh')
 
-# Starts a system upgrade and then install all the non-existing packages using pacman.
-if command -V pacman &>/dev/null; then
+# 1. System package install (Arch only). NixOS handles this declaratively.
+if [[ -f /etc/NIXOS ]] || command -V nixos-rebuild &>/dev/null; then
+	echo "NixOS detected — skipping package install (manage packages in your flake/configuration.nix)."
+elif command -V pacman &>/dev/null; then
 	echo "Starting system upgrade and package install..."
 	if ! sudo pacman -Syu --needed "${PACKAGESTOINSTALL[@]}"; then
 		echo "Error: pacman transaction failed. Exiting..."
@@ -13,20 +19,26 @@ if command -V pacman &>/dev/null; then
 	fi
 	echo "All packages installed successfully."
 else
-	echo "Warning: pacman not found. Aborting installation."
-	exit 1
+	echo "Warning: no supported package manager found — skipping package install."
 fi
 
-# Setup symlinks to dotfiles using GNU stow.
+# 2. Symlink dotfiles via GNU stow.
 echo "Setting up dotfiles..."
 cd ~/dotfiles/ || {
 	echo "Directory ~/dotfiles/ not found! Exiting."
 	exit 1
 }
+if ! command -V stow &>/dev/null; then
+	echo "Error: stow not found. Install it first (Arch: pacman -S stow; NixOS: add 'stow' to your packages)."
+	exit 1
+fi
 stow -R "${PACKAGESTOSTOW[@]}"
 
-# Install Antidote (zsh plugin manager) into ~/.antidote if missing.
-if [[ ! -d ~/.antidote ]]; then
+# 3. Install Antidote (zsh plugin manager) into ~/.antidote if missing.
+# On NixOS, Antidote is typically provided by the system (programs.zsh.antidote
+# or the 'antidote' package), in which case this clone is unnecessary — the
+# directory check below makes it a no-op.
+if [[ ! -d ~/.antidote ]] && [[ ! -d /run/current-system/sw/share/antidote ]]; then
 	echo "Installing Antidote..."
 	git clone --depth=1 https://github.com/mattmc3/antidote.git ~/.antidote
 fi
