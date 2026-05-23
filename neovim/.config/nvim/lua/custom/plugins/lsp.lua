@@ -89,6 +89,7 @@ return {
         html = {},      -- html
         cssls = {},     -- css
         taplo = {},     -- toml
+        nil_ls = {},    -- nix
       }
 
       -- ─────────────────────────────────────────────────────────────────
@@ -163,6 +164,7 @@ return {
         'stylua',              -- lua (this config itself)
         'clang-format',        -- c / c++
         'google-java-format',  -- java
+        'nixpkgs-fmt',         -- nix
       }
 
       local ensure_installed = vim.tbl_keys(servers or {})
